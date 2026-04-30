@@ -695,21 +695,6 @@
     }
     .reveal.in{ opacity: 1; transform: none; }
 
-    /* ---------- PARALLAX FLOATERS ---------- */
-    .floaters{
-      position: fixed; inset: 0; pointer-events: none; z-index: 1;
-      overflow: hidden;
-    }
-    .floater{
-      position: absolute;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--fg-mute);
-      opacity: 0.35;
-      white-space: nowrap;
-    }
-    .floater.up{ color: var(--accent-dim); }
-    .floater.dn{ color: #6a2828; }
 
     @media (prefers-reduced-motion: reduce){
       *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -722,9 +707,6 @@
   <div class="tape" aria-hidden="true">
     <div class="tape-track" id="tape-track"></div>
   </div>
-
-  <!-- FLOATING NUMBERS -->
-  <div class="floaters" aria-hidden="true" id="floaters"></div>
 
   <!-- NAV -->
   <nav class="nav">
@@ -1431,45 +1413,9 @@
   }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
   document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-  // ---------- PARALLAX FLOATERS ----------
-  const FLOATER_DATA = [
-    { txt: "AUM ↑ 10×",        up: true  },
-    { txt: "CSAT ▲ 4.6",       up: true  },
-    { txt: "MEP · LIVE",       up: true  },
-    { txt: "−95% time",        up: true  },
-    { txt: "FCI · 24/7",       up: null  },
-    { txt: "py.script(✓)",     up: null  },
-    { txt: "SELECT *",         up: null  },
-    { txt: "claude.complete()",up: null  },
-    { txt: "USD ▲ +0.04",      up: true  },
-    { txt: "churn ▼ −12%",     up: true  },
-    { txt: "ABC · revamp",     up: null  },
-    { txt: "discovery → ship", up: null  }
-  ];
-
-  function buildFloaters() {
-    const c = document.getElementById("floaters");
-    FLOATER_DATA.forEach((f, i) => {
-      const el = document.createElement("div");
-      el.className = "floater" + (f.up === true ? " up" : f.up === false ? " dn" : "");
-      el.textContent = f.txt;
-      el.style.left = (5 + (i * 17) % 90) + "%";
-      el.style.top = (10 + (i * 31) % 240) + "vh";
-      el.style.fontSize = (10 + (i % 3) * 2) + "px";
-      el.dataset.depth = (0.05 + (i % 4) * 0.06).toFixed(2);
-      c.appendChild(el);
-    });
-  }
-  buildFloaters();
-
   function onScroll() {
-    const y = window.scrollY;
-    document.querySelectorAll(".floater").forEach(el => {
-      const d = parseFloat(el.dataset.depth);
-      el.style.transform = `translateY(${(-y * d).toFixed(1)}px)`;
-    });
     const panel = document.getElementById("hero-panel");
-    if (panel) panel.style.transform = `translateY(${(y * 0.08).toFixed(1)}px)`;
+    if (panel) panel.style.transform = `translateY(${(window.scrollY * 0.08).toFixed(1)}px)`;
   }
   let ticking = false;
   window.addEventListener("scroll", () => {
