@@ -235,18 +235,24 @@
       color: var(--fg-mute);
       font-style: italic;
       font-weight: 300;
-      min-height: 2.2em;
+      position: relative;
+      height: 1.15em;
+    }
+    .hero h1 .scramble-wrap{
+      display: block;
+      position: absolute;
+      top: 1.25em;
+      left: 0;
+      line-height: 1.15;
     }
     .hero h1 .scramble{
-      display: block;
+      display: inline;
       color: var(--accent);
       font-family: var(--mono);
       font-style: normal;
       font-weight: 500;
       font-size: 0.55em;
       letter-spacing: -0.02em;
-      line-height: 1.2;
-      margin-top: 0.2em;
     }
 
     .hero-grid{
@@ -699,28 +705,29 @@
     .reveal.in{ opacity: 1; transform: none; }
 
     /* ---------- CUSTOM CURSOR ---------- */
+    .cursor, .cursor-ring{ opacity: 0; pointer-events: none; }
     @media (pointer: fine){
-      *, *::before, *::after{ cursor: none !important; }
+      body.cursor-ready *, body.cursor-ready *::before, body.cursor-ready *::after{ cursor: none !important; }
       .cursor{
-        position: fixed; top: 0; left: 0; z-index: 9999;
+        position: fixed; z-index: 9999;
         width: 8px; height: 8px; border-radius: 50%;
         background: var(--accent);
         pointer-events: none;
-        transform: translate(-50%, -50%);
-        transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.2s;
+        transition: width 0.2s, height 0.2s, opacity 0.3s;
         box-shadow: 0 0 10px var(--accent);
         will-change: transform;
+        top: 0; left: 0;
       }
       .cursor-ring{
-        position: fixed; top: 0; left: 0; z-index: 9998;
+        position: fixed; z-index: 9998;
         width: 32px; height: 32px; border-radius: 50%;
         border: 1px solid rgba(124,255,107,0.4);
         pointer-events: none;
-        transform: translate(-50%, -50%);
-        transition: width 0.35s ease, height 0.35s ease, border-color 0.2s, opacity 0.2s;
+        transition: width 0.35s ease, height 0.35s ease, border-color 0.2s, opacity 0.3s;
         will-change: transform;
+        top: 0; left: 0;
       }
-      .cursor.hover{ width: 14px; height: 14px; background: var(--accent); }
+      .cursor.hover{ width: 14px; height: 14px; }
       .cursor-ring.hover{ width: 48px; height: 48px; border-color: rgba(124,255,107,0.7); }
     }
 
@@ -1584,18 +1591,27 @@
     const ring = document.getElementById("cursor-ring");
     if (!cur || !ring || window.matchMedia("(pointer: coarse)").matches) return;
 
-    let mx = -100, my = -100, rx = -100, ry = -100;
+    let mx = -200, my = -200, rx = -200, ry = -200, ready = false;
 
     document.addEventListener("mousemove", e => {
       mx = e.clientX; my = e.clientY;
-      cur.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+      cur.style.left = mx + "px";
+      cur.style.top  = my + "px";
+      cur.style.transform = "translate(-50%,-50%)";
+      if (!ready){
+        ready = true;
+        document.body.classList.add("cursor-ready");
+        cur.style.opacity  = "1";
+        ring.style.opacity = "1";
+      }
     }, { passive: true });
 
-    // ring follows with lag
     (function animRing(){
       rx += (mx - rx) * 0.12;
       ry += (my - ry) * 0.12;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+      ring.style.left = rx + "px";
+      ring.style.top  = ry + "px";
+      ring.style.transform = "translate(-50%,-50%)";
       requestAnimationFrame(animRing);
     })();
 
@@ -1605,7 +1621,7 @@
     });
 
     document.addEventListener("mouseleave", () => { cur.style.opacity = "0"; ring.style.opacity = "0"; });
-    document.addEventListener("mouseenter", () => { cur.style.opacity = "1"; ring.style.opacity = "1"; });
+    document.addEventListener("mouseenter", () => { if (ready) { cur.style.opacity = "1"; ring.style.opacity = "1"; } });
   })();
 
   // ---------- ANIMATED COUNTERS ----------
