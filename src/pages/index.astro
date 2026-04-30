@@ -235,19 +235,18 @@
       color: var(--fg-mute);
       font-style: italic;
       font-weight: 300;
+      min-height: 2.2em;
     }
     .hero h1 .scramble{
-      display: inline-block;
+      display: block;
       color: var(--accent);
       font-family: var(--mono);
+      font-style: normal;
       font-weight: 500;
-      font-size: 0.78em;
+      font-size: 0.55em;
       letter-spacing: -0.02em;
-      vertical-align: 0.06em;
-      white-space: nowrap;
-      max-width: 90vw;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.2;
+      margin-top: 0.2em;
     }
 
     .hero-grid{
@@ -707,14 +706,7 @@
     @media (max-width: 600px){
       section{ padding: 72px 0; }
 
-      .hero h1 .role{ min-height: 2.4em; overflow: hidden; }
-      .hero h1 .scramble{
-        font-size: 0.42em;
-        white-space: normal;
-        max-width: 100%;
-        overflow: visible;
-        text-overflow: clip;
-      }
+      .hero h1 .scramble{ font-size: 0.45em; }
 
       .section-head{
         grid-template-columns: 1fr;
@@ -785,7 +777,7 @@
       <h1>
         <span class="name">Marcos D.<br/>González.</span>
         <span class="role">
-          <span data-i18n="hero.is">acerca</span>
+          <span data-i18n="hero.is">especializado en</span>
           <span class="scramble"
             data-words-es="productos de inversión y ahorro|discovery y estrategia de producto|datos, métricas e impacto|roadmaps que se convierten en features|productos financieros de alto impacto"
             data-words-en="investment and savings products|product discovery and strategy|data, metrics and impact|roadmaps that ship as features|high-impact financial products">productos de inversión y ahorro</span>
