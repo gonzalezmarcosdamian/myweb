@@ -1,0 +1,1534 @@
+---
+// Marcos Damián González — Personal Site
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Marcos Damián González — Product Manager · Fintech</title>
+  <meta name="description" content="Product Manager especializado en fintech e inversiones. 6+ años construyendo productos digitales en bancos y fintechs." />
+  <meta name="author" content="Marcos Damián González" />
+  <meta property="og:title" content="Marcos Damián González — Product Manager · Fintech" />
+  <meta property="og:description" content="PM con +6 años en fintech y banca argentina. Especializado en productos de inversión, datos y automatización con IA." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://marcosdamiangonzalez.ar/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://marcosdamiangonzalez.ar/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:        #0a0a0a;
+      --bg-2:      #111111;
+      --bg-3:      #161616;
+      --line:      #1f1f1f;
+      --line-2:    #2a2a2a;
+      --fg:        #f2f2f2;
+      --fg-dim:    #8a8a8a;
+      --fg-mute:   #555555;
+      --accent:    #7CFF6B;
+      --accent-dim:#3d8a35;
+      --down:      #FF4D4D;
+      --warm:      #E8E0D0;
+      --grid:      rgba(255,255,255,0.025);
+
+      --serif:  "Space Grotesk", sans-serif;
+      --mono:   "JetBrains Mono", ui-monospace, monospace;
+      --body:   "Inter", system-ui, sans-serif;
+
+      --max:    1280px;
+      --pad:    clamp(20px, 4vw, 64px);
+    }
+
+    *{ box-sizing: border-box; margin:0; padding:0; }
+    html{ scroll-behavior: smooth; }
+    body{
+      font-family: var(--body);
+      background: var(--bg);
+      color: var(--fg);
+      font-size: 16px;
+      line-height: 1.55;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 64px 64px;
+      background-position: -1px -1px;
+    }
+
+    ::selection{ background: var(--accent); color: #000; }
+
+    a{ color: inherit; text-decoration: none; }
+    button{ background:none; border:none; color:inherit; font: inherit; cursor:pointer; }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+      position: relative;
+    }
+
+    /* ---------- TICKER TAPE ---------- */
+    .tape{
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 38px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      z-index: 50;
+      overflow: hidden;
+      display: flex; align-items: center;
+    }
+    .tape::before, .tape::after{
+      content:""; position:absolute; top:0; bottom:0; width:80px; z-index:2; pointer-events:none;
+    }
+    .tape::before{ left:0; background: linear-gradient(90deg, var(--bg) 0%, transparent 100%); }
+    .tape::after{ right:0; background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%); }
+
+    .tape-track{
+      display: flex;
+      gap: 40px;
+      white-space: nowrap;
+      animation: tape-scroll 80s linear infinite;
+      padding-left: 40px;
+      will-change: transform;
+    }
+    @keyframes tape-scroll{
+      from{ transform: translateX(0); }
+      to  { transform: translateX(-50%); }
+    }
+    .tape:hover .tape-track{ animation-play-state: paused; }
+
+    .tk{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--fg-dim);
+    }
+    .tk b{ color: var(--fg); font-weight: 500; letter-spacing: 0.04em; }
+    .tk .v{ color: var(--fg); font-variant-numeric: tabular-nums; }
+    .tk .ch{ font-variant-numeric: tabular-nums; }
+    .tk .ch.up{ color: var(--accent); }
+    .tk .ch.dn{ color: var(--down); }
+
+    /* ---------- NAV ---------- */
+    .nav{
+      position: fixed; top: 38px; left: 0; right: 0;
+      z-index: 40;
+      padding: 16px var(--pad);
+      display: flex; justify-content: space-between; align-items: center;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0) 100%);
+    }
+    .logo{
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--fg);
+    }
+    .logo .dot{
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{ opacity: 1; transform: scale(1); }
+      50%   { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .nav-right{ display: flex; align-items: center; gap: 20px; }
+    .nav-links{ display: flex; gap: 24px; }
+    .nav-links a{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--fg-dim);
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a:hover{ color: var(--fg); }
+    .nav-links a::before{
+      content:"["; opacity: 0; margin-right: 4px; color: var(--accent);
+      transition: opacity 0.2s;
+    }
+    .nav-links a::after{
+      content:"]"; opacity: 0; margin-left: 4px; color: var(--accent);
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover::before, .nav-links a:hover::after{ opacity: 1; }
+
+    .lang-toggle{
+      display: inline-flex;
+      border: 1px solid var(--line-2);
+      border-radius: 999px;
+      overflow: hidden;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+    .lang-toggle button{
+      padding: 5px 11px;
+      color: var(--fg-dim);
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+    }
+    .lang-toggle button.active{ background: var(--fg); color: var(--bg); }
+    .lang-toggle button:not(.active):hover{ color: var(--fg); }
+
+    @media (max-width: 720px){
+      .nav-links{ display: none; }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero{
+      min-height: 100vh;
+      padding-top: 140px;
+      padding-bottom: 80px;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative;
+    }
+
+    .hero-meta{
+      display: flex; align-items: center; gap: 16px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+      flex-wrap: wrap;
+    }
+    .hero-meta .sep{ width: 30px; height: 1px; background: var(--line-2); }
+    .status-pill{
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 4px 10px;
+      border: 1px solid var(--accent-dim);
+      border-radius: 999px;
+      color: var(--accent);
+      background: rgba(124,255,107,0.05);
+    }
+    .status-pill .dot{
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .hero h1{
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(48px, 8.4vw, 128px);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      margin-bottom: 36px;
+    }
+    .hero h1 .name{ display: block; }
+    .hero h1 .role{
+      display: block;
+      color: var(--fg-mute);
+      font-style: italic;
+      font-weight: 300;
+    }
+    .hero h1 .scramble{
+      display: inline-block;
+      color: var(--accent);
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 0.78em;
+      letter-spacing: -0.02em;
+      vertical-align: 0.06em;
+    }
+
+    .hero-grid{
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 60px;
+      align-items: end;
+    }
+    @media (max-width: 880px){
+      .hero-grid{ grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .hero-tagline{
+      font-family: var(--body);
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height: 1.55;
+      color: var(--fg-dim);
+      max-width: 560px;
+    }
+    .hero-tagline em{
+      color: var(--fg);
+      font-style: normal;
+      border-bottom: 1px dashed var(--accent-dim);
+    }
+
+    /* sparkline panel */
+    .panel{
+      border: 1px solid var(--line);
+      background: rgba(17,17,17,0.6);
+      backdrop-filter: blur(6px);
+      padding: 18px 20px;
+      position: relative;
+    }
+    .panel::before, .panel::after,
+    .panel .corner-tr, .panel .corner-bl{
+      content:"+";
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .panel::before{ top: -5px; left: -5px; }
+    .panel::after{  bottom: -5px; right: -5px; }
+    .panel .corner-tr{ top: -5px; right: -5px; }
+    .panel .corner-bl{ bottom: -5px; left: -5px; }
+
+    .panel-head{
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .panel-head .live{ color: var(--accent); }
+
+    .quote{
+      display: flex; align-items: baseline; gap: 12px;
+      margin-bottom: 12px;
+      font-family: var(--mono);
+    }
+    .quote .symbol{ font-size: 13px; color: var(--fg); letter-spacing: 0.06em; }
+    .quote .price{ font-size: 28px; font-weight: 500; color: var(--fg); font-variant-numeric: tabular-nums; }
+    .quote .change{ font-size: 12px; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+    .spark{ width: 100%; height: 56px; display: block; }
+    .spark-x{
+      display: flex; justify-content: space-between;
+      font-family: var(--mono); font-size: 9px;
+      color: var(--fg-mute); margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ---------- SECTIONS ---------- */
+    section{ position: relative; padding: 120px 0; }
+    .section-head{
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      margin-bottom: 64px;
+      align-items: baseline;
+    }
+    .section-num{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+    }
+    .section-title{
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(32px, 4vw, 56px);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+    .section-title em{
+      color: var(--fg-mute);
+      font-style: italic;
+      font-weight: 300;
+    }
+    .section-sub{
+      grid-column: 2 / -1;
+      max-width: 600px;
+      margin-top: 12px;
+      color: var(--fg-dim);
+      font-size: 15px;
+    }
+
+    /* ---------- SKILLS ---------- */
+    .skills-grid{
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+    }
+    .skill-group{
+      grid-column: 2 / -1;
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      display: grid;
+      grid-template-columns: 200px 1fr auto;
+      gap: 32px;
+      align-items: baseline;
+      transition: padding 0.3s ease;
+      cursor: default;
+    }
+    .skill-group:hover{ padding-left: 12px; }
+    .skill-group:last-child{ border-bottom: 1px solid var(--line); }
+
+    .skill-cat{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .skill-cat .idx{ color: var(--accent); }
+
+    .skill-list{
+      display: flex; flex-wrap: wrap; gap: 8px 14px;
+    }
+    .skill{
+      font-family: var(--body);
+      font-size: 17px;
+      color: var(--fg);
+      position: relative;
+      padding: 4px 0;
+      cursor: default;
+      transition: color 0.2s;
+    }
+    .skill::after{
+      content: attr(data-w);
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--fg-mute);
+      vertical-align: super;
+      margin-left: 2px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .skill:hover{ color: var(--accent); }
+    .skill:hover::after{ opacity: 1; }
+
+    .skill-meta{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.06em;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .skill-meta b{ color: var(--fg); font-weight: 500; }
+
+    @media (max-width: 760px){
+      .skill-group{ grid-template-columns: 1fr; gap: 12px; }
+      .skill-meta{ text-align: left; }
+    }
+
+    /* ---------- PROJECTS ---------- */
+    .projects{
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+    }
+    .projects-list{
+      grid-column: 2 / -1;
+      display: grid;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .project{
+      background: var(--bg);
+      padding: 32px 28px;
+      display: grid;
+      grid-template-columns: 1.5fr 2fr 1fr;
+      gap: 32px;
+      align-items: start;
+      position: relative;
+      transition: background 0.3s ease;
+      cursor: default;
+    }
+    .project::before{
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: var(--accent);
+      transform: scaleY(0); transform-origin: bottom;
+      transition: transform 0.4s ease;
+    }
+    .project:hover{ background: var(--bg-2); }
+    .project:hover::before{ transform: scaleY(1); transform-origin: top; }
+
+    .project-head{
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .project-symbol{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .project-symbol .badge{
+      padding: 2px 6px;
+      border: 1px solid var(--line-2);
+      color: var(--fg-dim);
+      border-radius: 3px;
+      font-size: 9px;
+    }
+    .project-symbol .badge.live{
+      color: var(--accent);
+      border-color: var(--accent-dim);
+      background: rgba(124,255,107,0.05);
+    }
+    .project-name{
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .project-org{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+
+    .project-desc{
+      color: var(--fg-dim);
+      font-size: 14.5px;
+      line-height: 1.55;
+      max-width: 460px;
+    }
+    .project-desc em{ color: var(--fg); font-style: normal; }
+
+    .project-stats{
+      display: flex; flex-direction: column; gap: 14px;
+      align-items: flex-end;
+      text-align: right;
+    }
+    .stat{ font-family: var(--mono); }
+    .stat .label{
+      font-size: 10px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .stat .value{
+      font-size: 22px;
+      color: var(--accent);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat .value.neutral{ color: var(--fg); }
+
+    @media (max-width: 880px){
+      .project{ grid-template-columns: 1fr; gap: 20px; }
+      .project-stats{ flex-direction: row; align-items: flex-start; text-align: left; gap: 28px; }
+    }
+
+    /* ---------- NOW SECTION ---------- */
+    .now{
+      background: var(--bg-2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 80px 0;
+      margin: 60px 0;
+    }
+    .now-grid{
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+    }
+    .now-content{
+      grid-column: 2 / -1;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    @media (max-width: 760px){
+      .now-content{ grid-template-columns: 1fr; gap: 32px; }
+    }
+    .now-label{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 16px;
+    }
+    .now-label .dot{
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    .now-text{
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.6vw, 30px);
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      font-weight: 400;
+    }
+    .now-text em{ color: var(--accent); font-style: normal; }
+
+    .now-meta{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--fg-dim);
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+    }
+    .now-meta .row{
+      display: flex; justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    .now-meta .row:last-child{ border-bottom: none; }
+    .now-meta .k{ color: var(--fg-mute); }
+    .now-meta .v{ color: var(--fg); }
+
+    /* ---------- CONTACT ---------- */
+    .contact{ padding: 120px 0 100px; }
+    .contact-grid{
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+    }
+    .contact-main{ grid-column: 2 / -1; }
+    .contact-cta{
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(40px, 6vw, 88px);
+      line-height: 0.95;
+      letter-spacing: -0.035em;
+      margin-bottom: 56px;
+    }
+    .contact-cta em{
+      color: var(--fg-mute);
+      font-style: italic;
+      font-weight: 300;
+    }
+    .contact-cta a{
+      color: var(--accent);
+      position: relative;
+      display: inline-block;
+    }
+    .contact-cta a::after{
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0.06em;
+      height: 1px; background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s cubic-bezier(.7,0,.3,1);
+    }
+    .contact-cta a:hover::after{ transform: scaleX(1); }
+
+    .contact-links{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .contact-link{
+      background: var(--bg);
+      padding: 22px 24px;
+      display: flex; flex-direction: column; gap: 4px;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .contact-link:hover{ background: var(--bg-2); }
+    .contact-link .ico{
+      width: 18px; height: 18px;
+      stroke: var(--fg-dim); fill: none; stroke-width: 1.6;
+      transition: stroke 0.2s, fill 0.2s;
+      flex: 0 0 auto;
+    }
+    .contact-link .ico.fill{ fill: var(--fg-dim); stroke: none; }
+    .contact-link:hover .ico{ stroke: var(--accent); }
+    .contact-link:hover .ico.fill{ fill: var(--accent); stroke: none; }
+    .contact-link .k{
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .contact-link .v{
+      font-family: var(--body);
+      font-size: 16px;
+      color: var(--fg);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .contact-link .arrow{
+      margin-left: auto;
+      color: var(--fg-mute);
+      transition: transform 0.3s, color 0.2s;
+      font-family: var(--mono);
+    }
+    .contact-link:hover .arrow{
+      transform: translate(2px, -2px);
+      color: var(--accent);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer{
+      border-top: 1px solid var(--line);
+      padding: 32px var(--pad);
+      margin-top: 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.04em;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer .clock{ color: var(--fg-dim); font-variant-numeric: tabular-nums; }
+
+    /* ---------- REVEAL ---------- */
+    .reveal{
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+    }
+    .reveal.in{ opacity: 1; transform: none; }
+
+    /* ---------- PARALLAX FLOATERS ---------- */
+    .floaters{
+      position: fixed; inset: 0; pointer-events: none; z-index: 1;
+      overflow: hidden;
+    }
+    .floater{
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      opacity: 0.35;
+      white-space: nowrap;
+    }
+    .floater.up{ color: var(--accent-dim); }
+    .floater.dn{ color: #6a2828; }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TICKER TAPE -->
+  <div class="tape" aria-hidden="true">
+    <div class="tape-track" id="tape-track"></div>
+  </div>
+
+  <!-- FLOATING NUMBERS -->
+  <div class="floaters" aria-hidden="true" id="floaters"></div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#top" class="logo">
+      <span class="dot"></span>
+      <span>MDG</span>
+      <span style="color:var(--fg-mute)">/</span>
+      <span style="color:var(--fg-dim)" data-i18n="nav.role">Product Manager</span>
+    </a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#skills" data-i18n="nav.skills">skills</a>
+        <a href="#projects" data-i18n="nav.projects">proyectos</a>
+        <a href="#now" data-i18n="nav.now">now</a>
+        <a href="#contact" data-i18n="nav.contact">contacto</a>
+      </div>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button data-lang="es" class="active">ES</button>
+        <button data-lang="en">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <main id="top">
+    <section class="hero wrap">
+      <div class="hero-meta">
+        <span data-i18n="hero.location">Córdoba, Argentina</span>
+        <span class="sep"></span>
+        <span data-i18n="hero.years">6+ años en producto</span>
+        <span class="sep"></span>
+        <span class="status-pill">
+          <span class="dot"></span>
+          <span data-i18n="hero.status">Siempre construyendo</span>
+        </span>
+      </div>
+
+      <h1>
+        <span class="name">Marcos D.<br/>González.</span>
+        <span class="role">
+          <span data-i18n="hero.is">acerca</span>
+          <span class="scramble"
+            data-words-es="productos de inversión y ahorro|herramientas para hacer crecer tu plata|formas de proteger tu capital|experiencias financieras simples|productos de alto impacto"
+            data-words-en="investment and savings products|tools to grow your money|ways to protect your capital|simple financial experiences|high-impact products">productos de inversión y ahorro</span>
+        </span>
+      </h1>
+
+      <div class="hero-grid">
+        <p class="hero-tagline" data-i18n-html="hero.tagline">
+          Product Manager en <em>fintech y banca</em>. Construyo productos de alto impacto en <em>inversión y ahorro</em> — enseñar a ahorrar, a invertir y a proteger el capital. Pongo al usuario en el centro y combino <em>discovery, datos y delivery</em> sin pedir permiso.
+        </p>
+
+        <div class="panel" id="hero-panel">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <div class="panel-head">
+            <span data-i18n="hero.panel.title">CARRERA · 6Y</span>
+            <span class="live">
+              <span data-i18n="hero.panel.live">EN VIVO</span> ●
+            </span>
+          </div>
+          <div class="quote">
+            <span class="symbol">MDG</span>
+            <span class="price" id="hero-price">+10.0×</span>
+            <span class="change" id="hero-change">▲ growth</span>
+          </div>
+          <svg class="spark" viewBox="0 0 300 56" preserveAspectRatio="none" id="hero-spark">
+            <defs>
+              <linearGradient id="sparkFill" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#7CFF6B" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#7CFF6B" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path id="spark-area" fill="url(#sparkFill)" d=""></path>
+            <path id="spark-line" fill="none" stroke="#7CFF6B" stroke-width="1.5" d=""></path>
+          </svg>
+          <div class="spark-x">
+            <span>2019</span><span>2021</span><span>2023</span><span>2026</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">/ 01</span>
+        <h2 class="section-title">
+          <span data-i18n="skills.title">Habilidades</span>
+          <em data-i18n="skills.title.em">— mi stack vivo.</em>
+        </h2>
+        <p class="section-sub" data-i18n="skills.sub">
+          Cómo pienso al construir, qué uso para entender al usuario, y dónde puedo bajar al código sin esperar a nadie.
+        </p>
+      </div>
+
+      <div class="skills-grid reveal">
+        <div class="skill-group">
+          <div class="skill-cat"><span class="idx">/01</span> <span data-i18n="skills.cat.product">Producto</span></div>
+          <div class="skill-list">
+            <span class="skill" data-w="core" data-i18n="skills.product.user">Usuario en el centro</span>
+            <span class="skill" data-w="lead" data-i18n="skills.product.disc">Discovery</span>
+            <span class="skill" data-w="6y" data-i18n="skills.product.road">Roadmapping</span>
+            <span class="skill" data-w="reg" data-i18n="skills.product.wealth">Estrategia de Wealth</span>
+            <span class="skill" data-w="kpi" data-i18n="skills.product.kpi">Métricas &amp; KPIs</span>
+            <span class="skill" data-w="ux" data-i18n="skills.product.ux">Simplificación de UX</span>
+            <span class="skill" data-w="prio" data-i18n="skills.product.prio">Priorización &amp; backlog</span>
+            <span class="skill" data-w="b2c" data-i18n="skills.product.b2c">B2C · B2B</span>
+          </div>
+          <div class="skill-meta"><b>08</b> · <span data-i18n="skills.cap">capacidades</span></div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-cat"><span class="idx">/02</span> <span data-i18n="skills.cat.data">Datos &amp; Análisis</span></div>
+          <div class="skill-list">
+            <span class="skill" data-w="think" data-i18n="skills.data.think">Pensamiento analítico</span>
+            <span class="skill" data-w="deci" data-i18n="skills.data.deci">Decisiones data-driven</span>
+            <span class="skill" data-w="cohort" data-i18n="skills.data.cohort">Cohorts &amp; Churn</span>
+            <span class="skill" data-w="port" data-i18n="skills.data.port">Análisis de portfolios</span>
+            <span class="skill" data-w="dash" data-i18n="skills.data.dash">Dashboards &amp; visualización</span>
+            <span class="skill" data-w="funnel" data-i18n="skills.data.funnel">Funnels &amp; conversión</span>
+          </div>
+          <div class="skill-meta"><b>06</b> · <span data-i18n="skills.cap">capacidades</span></div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-cat"><span class="idx">/03</span> <span data-i18n="skills.cat.tech">Técnico</span></div>
+          <div class="skill-list">
+            <span class="skill" data-w="build" data-i18n="skills.tech.build">Construcción de productos propios</span>
+            <span class="skill" data-w="auto" data-i18n="skills.tech.auto">Automatización con IA</span>
+            <span class="skill" data-w="int" data-i18n="skills.tech.int">Integraciones &amp; APIs</span>
+            <span class="skill" data-w="bridge" data-i18n="skills.tech.bridge">Bridge negocio ↔ técnica</span>
+            <span class="skill" data-w="data" data-i18n="skills.tech.data">Modelado de datos</span>
+            <span class="skill" data-w="proto" data-i18n="skills.tech.proto">Prototipado funcional</span>
+          </div>
+          <div class="skill-meta"><b>06</b> · <span data-i18n="skills.cap">capacidades</span></div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-cat"><span class="idx">/04</span> <span data-i18n="skills.cat.soft">Soft</span></div>
+          <div class="skill-list">
+            <span class="skill" data-w="own" data-i18n="skills.soft.own">Autonomía &amp; ownership</span>
+            <span class="skill" data-w="cross" data-i18n="skills.soft.cross">Coordinación cross-team</span>
+            <span class="skill" data-w="exec" data-i18n="skills.soft.exec">Comunicación ejecutiva</span>
+            <span class="skill" data-w="reg" data-i18n="skills.soft.reg">Entornos regulados</span>
+            <span class="skill" data-w="unblock" data-i18n="skills.soft.unblock">Desbloqueo de decisiones</span>
+            <span class="skill" data-w="es/en" data-i18n="skills.soft.lang">ES nativo · EN fluido</span>
+          </div>
+          <div class="skill-meta"><b>06</b> · <span data-i18n="skills.cap">capacidades</span></div>
+        </div>
+
+        <div class="skill-group" style="border-top: 1px dashed var(--line-2);">
+          <div class="skill-cat"><span class="idx">/→</span> <span data-i18n="skills.cat.tools">Herramientas</span></div>
+          <div class="skill-list">
+            <span class="skill" data-w="py">Python</span>
+            <span class="skill" data-w="sql">SQL</span>
+            <span class="skill" data-w="ai">Claude AI</span>
+            <span class="skill" data-w="redshift">Redshift</span>
+            <span class="skill" data-w="bq">BigQuery</span>
+            <span class="skill" data-w="pbi">Power BI</span>
+            <span class="skill" data-w="viz">Looker · Tableau</span>
+            <span class="skill" data-w="excel">Excel</span>
+            <span class="skill" data-w="aws">AWS</span>
+            <span class="skill" data-w="figma">Figma</span>
+            <span class="skill" data-w="jira">Jira · Confluence</span>
+            <span class="skill" data-w="react">React</span>
+            <span class="skill" data-w="fapi">FastAPI</span>
+            <span class="skill" data-w="dyna">Dynatrace</span>
+          </div>
+          <div class="skill-meta"><b>14</b> · <span data-i18n="skills.tools">herramientas</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">/ 02</span>
+        <h2 class="section-title">
+          <span data-i18n="projects.title">Proyectos destacados</span>
+          <em data-i18n="projects.title.em">— resultados reales.</em>
+        </h2>
+        <p class="section-sub" data-i18n="projects.sub">
+          Productos que construí o lideré, siempre con el usuario en el centro. Métricas reales, no marketing.
+        </p>
+      </div>
+
+      <div class="projects reveal">
+        <div></div>
+        <div class="projects-list">
+
+          <article class="project">
+            <div class="project-head">
+              <div class="project-symbol">
+                <span>BLD · BUILDFUTURE</span>
+                <span class="badge live">LIVE</span>
+              </div>
+              <h3 class="project-name">
+                <a href="https://buildfuture.com.ar" target="_blank" rel="noopener" style="color:inherit;">
+                  BuildFuture <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗</span>
+                </a>
+              </h3>
+              <div class="project-org">buildfuture.com.ar · 2024–<span data-i18n="proj.now">presente</span></div>
+            </div>
+            <div class="project-desc" data-i18n-html="proj.bf.desc">
+              Producto propio para que cualquier persona <em>vea su patrimonio en un solo lugar</em>. Conecta 4 brokers (IOL, PPI, Cocos, Binance) y unifica acciones, bonos, fondos, cripto y más. Sumo features que motivan a invertir: <em>Freedom Score, racha de constancia y proyecciones a 1/3/5/10 años</em>.
+            </div>
+            <div class="project-stats">
+              <div class="stat">
+                <span class="label" data-i18n="proj.bf.s1">Brokers conectados</span>
+                <span class="value">4</span>
+              </div>
+              <div class="stat">
+                <span class="label" data-i18n="proj.bf.s2">Construido</span>
+                <span class="value neutral">E2E</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-head">
+              <div class="project-symbol">
+                <span>USD · OFICIAL</span>
+                <span class="badge live">LIVE</span>
+              </div>
+              <h3 class="project-name" data-i18n="proj.dolar.name">Dólar Oficial</h3>
+              <div class="project-org">Ualá · 2025–<span data-i18n="proj.now">presente</span></div>
+            </div>
+            <div class="project-desc" data-i18n-html="proj.dolar.desc">
+              Lancé Dólar Oficial dentro del ecosistema Ualá — una forma simple de <em>ahorrar en dólares</em> sin fricción. Coordiné negocio, legal, compliance, ops y producto para que estuviera al alcance de todos. Hoy es el <em>producto que más revenue genera</em> en la vertical Wealth.
+            </div>
+            <div class="project-stats">
+              <div class="stat">
+                <span class="label" data-i18n="proj.stat.rank">Ranking revenue</span>
+                <span class="value">#1</span>
+              </div>
+              <div class="stat">
+                <span class="label" data-i18n="proj.stat.vertical">Vertical</span>
+                <span class="value neutral">Wealth</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-head">
+              <div class="project-symbol">
+                <span>FCI · INV.RAPIDA</span>
+                <span class="badge">SHIPPED</span>
+              </div>
+              <h3 class="project-name" data-i18n="proj.invrap.name">Inversión Rápida</h3>
+              <div class="project-org">Banco Supervielle · 2024</div>
+            </div>
+            <div class="project-desc" data-i18n-html="proj.invrap.desc">
+              Lideré el equipo que construyó la versión final de Inversión Rápida — una experiencia pensada para que <em>cualquier cliente del banco pueda invertir en pocos toques</em>. La nueva versión logró <em>10× más usuarios activos y 10× más volumen</em>.
+            </div>
+            <div class="project-stats">
+              <div class="stat">
+                <span class="label" data-i18n="proj.stat.users">Usuarios activos</span>
+                <span class="value">10×</span>
+              </div>
+              <div class="stat">
+                <span class="label" data-i18n="proj.stat.volume">Volumen</span>
+                <span class="value">10×</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-head">
+              <div class="project-symbol">
+                <span>ABC · REVAMP</span>
+                <span class="badge live">WIP</span>
+              </div>
+              <h3 class="project-name" data-i18n="proj.abc.name">ABC — Acciones, bonos &amp; CEDEARs</h3>
+              <div class="project-org">Ualá · 2025–<span data-i18n="proj.now">presente</span></div>
+            </div>
+            <div class="project-desc" data-i18n-html="proj.abc.desc">
+              Liderando el revamp completo del producto para invertir en <em>acciones, bonos, letras y CEDEARs</em> argentinos. El objetivo: que más gente dé su <em>primer paso en el mercado</em> con una experiencia simple, clara y confiable.
+            </div>
+            <div class="project-stats">
+              <div class="stat">
+                <span class="label" data-i18n="proj.abc.s1">Activos</span>
+                <span class="value neutral">4 tipos</span>
+              </div>
+              <div class="stat">
+                <span class="label" data-i18n="proj.abc.s2">Estado</span>
+                <span class="value">en curso</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-head">
+              <div class="project-symbol">
+                <span>OPS · ANALYTICS</span>
+                <span class="badge live">LIVE</span>
+              </div>
+              <h3 class="project-name" data-i18n="proj.py.name">Product Analytics automatizado</h3>
+              <div class="project-org">Ualá · 2025</div>
+            </div>
+            <div class="project-desc" data-i18n-html="proj.py.desc">
+              Sistema propio para entender al usuario sin esperar al próximo informe: cohorts, churn, portfolios y flujos de negocio listos en horas. <em>De semanas a horas</em>, con resultados que impactan en decisiones de producto y leadership.
+            </div>
+            <div class="project-stats">
+              <div class="stat">
+                <span class="label" data-i18n="proj.stat.time">Tiempo de análisis</span>
+                <span class="value">−95%</span>
+              </div>
+              <div class="stat">
+                <span class="label" data-i18n="proj.stat.scope">Cobertura</span>
+                <span class="value neutral">5 prods</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- NOW -->
+    <section id="now" class="now">
+      <div class="wrap now-grid reveal">
+        <span class="section-num">/ 03</span>
+        <div class="now-content">
+          <div>
+            <div class="now-label">
+              <span class="dot"></span>
+              <span data-i18n="now.label">/now · qué estoy haciendo</span>
+            </div>
+            <p class="now-text" data-i18n-html="now.text">
+              Liderando el revamp de <em>ABC</em> en Ualá — la experiencia para que más gente pueda invertir en acciones, bonos, letras y CEDEARs. En paralelo: explorando <em>agentes de Claude</em> para entender mejor al usuario y acelerar el discovery.
+            </p>
+          </div>
+          <div class="now-meta">
+            <div class="row"><span class="k" data-i18n="now.role">Rol</span><span class="v" data-i18n="now.role.v">Category Lead · Wealth</span></div>
+            <div class="row"><span class="k" data-i18n="now.org">Empresa</span><span class="v">Ualá</span></div>
+            <div class="row"><span class="k" data-i18n="now.loc">Ubicación</span><span class="v">Córdoba, AR</span></div>
+            <div class="row"><span class="k" data-i18n="now.book">Leyendo</span><span class="v">Inspired · Cagan</span></div>
+            <div class="row"><span class="k" data-i18n="now.code">Codeando</span><span class="v">Python + Claude</span></div>
+            <div class="row"><span class="k" data-i18n="now.upd">Actualizado</span><span class="v" id="now-updated">—</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact wrap">
+      <div class="contact-grid">
+        <span class="section-num reveal">/ 04</span>
+        <div class="contact-main">
+          <h2 class="contact-cta reveal" data-i18n-html="contact.cta">
+            ¿Construimos<br/>algo juntos?
+          </h2>
+
+          <div class="contact-links reveal">
+            <a class="contact-link" href="https://www.linkedin.com/in/marcosdamiangonzalez" target="_blank" rel="noopener">
+              <span class="k" style="display:flex;align-items:center;gap:8px;">
+                <svg class="ico fill" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.21 24 24 23.23 24 22.28V1.72C24 .77 23.21 0 22.22 0z"/></svg>
+                LinkedIn
+              </span>
+              <span class="v">/marcosdamiangonzalez <span class="arrow">↗</span></span>
+            </a>
+            <a class="contact-link" href="mailto:ingonzalezdamian@gmail.com">
+              <span class="k" style="display:flex;align-items:center;gap:8px;">
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                Email
+              </span>
+              <span class="v">ingonzalezdamian@gmail.com <span class="arrow">↗</span></span>
+            </a>
+            <a class="contact-link" href="https://wa.me/5492920445362" target="_blank" rel="noopener">
+              <span class="k" style="display:flex;align-items:center;gap:8px;">
+                <svg class="ico fill" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.18.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.89-.79-1.5-1.78-1.67-2.08-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.12 4.51.71.31 1.27.49 1.71.63.72.23 1.37.2 1.89.12.58-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.04 21.5h-.01a9.95 9.95 0 01-5.07-1.39l-.36-.21-3.77.99 1.01-3.67-.24-.38a9.9 9.9 0 01-1.52-5.27c0-5.47 4.46-9.91 9.96-9.91 2.66 0 5.16 1.04 7.04 2.92a9.86 9.86 0 012.92 7c0 5.46-4.46 9.91-9.96 9.91zm8.41-18.31a11.83 11.83 0 00-8.41-3.48C5.46-.29.06 5.1.06 11.65c0 2.09.55 4.13 1.59 5.93L0 24l6.6-1.73a11.96 11.96 0 005.43 1.38h.01c6.58 0 11.96-5.39 11.96-11.94 0-3.19-1.24-6.19-3.5-8.45z"/></svg>
+                WhatsApp
+              </span>
+              <span class="v" data-i18n="contact.wa">enviar mensaje <span class="arrow">↗</span></span>
+            </a>
+            <a class="contact-link" href="https://instagram.com/dagonzalz" target="_blank" rel="noopener">
+              <span class="k" style="display:flex;align-items:center;gap:8px;">
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+                Instagram
+              </span>
+              <span class="v">@dagonzalz <span class="arrow">↗</span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>© 2026 · Marcos D. González · <span data-i18n="footer.built">construido a mano con HTML, CSS y mate</span></div>
+    <div class="clock" id="clock">— · — · —</div>
+  </footer>
+
+  <script>
+  // ---------- I18N ----------
+  const I18N = {
+    es: {
+      "nav.role": "Product Manager",
+      "nav.skills": "skills",
+      "nav.projects": "proyectos",
+      "nav.now": "now",
+      "nav.contact": "contacto",
+      "hero.location": "Córdoba, Argentina",
+      "hero.years": "6+ años en producto",
+      "hero.status": "Siempre construyendo",
+      "hero.is": "acerca",
+      "hero.tagline": "Product Manager en <em>fintech y banca</em>. Construyo productos de alto impacto en <em>inversión y ahorro</em> — enseñar a ahorrar, a invertir y a proteger el capital. Pongo al usuario en el centro y combino <em>discovery, datos y delivery</em> sin pedir permiso.",
+      "hero.panel.title": "CARRERA · 6Y",
+      "hero.panel.live": "EN VIVO",
+      "skills.title": "Habilidades",
+      "skills.title.em": "— mi stack vivo.",
+      "skills.sub": "Cómo pienso al construir, qué uso para entender al usuario, y dónde puedo bajar al código sin esperar a nadie.",
+      "skills.cap": "capacidades",
+      "skills.tools": "herramientas",
+      "skills.cat.product": "Producto",
+      "skills.cat.data": "Datos & Análisis",
+      "skills.cat.tech": "Técnico",
+      "skills.cat.soft": "Soft",
+      "skills.cat.tools": "Herramientas",
+      "skills.product.user": "Usuario en el centro",
+      "skills.product.disc": "Discovery",
+      "skills.product.road": "Roadmapping",
+      "skills.product.wealth": "Estrategia de Wealth",
+      "skills.product.kpi": "Métricas & KPIs",
+      "skills.product.ux": "Simplificación de UX",
+      "skills.product.prio": "Priorización & backlog",
+      "skills.product.b2c": "B2C · B2B",
+      "skills.data.think": "Pensamiento analítico",
+      "skills.data.deci": "Decisiones data-driven",
+      "skills.data.cohort": "Cohorts & Churn",
+      "skills.data.port": "Análisis de portfolios",
+      "skills.data.dash": "Dashboards & visualización",
+      "skills.data.funnel": "Funnels & conversión",
+      "skills.tech.build": "Construcción de productos propios",
+      "skills.tech.auto": "Automatización con IA",
+      "skills.tech.int": "Integraciones & APIs",
+      "skills.tech.bridge": "Bridge negocio ↔ técnica",
+      "skills.tech.data": "Modelado de datos",
+      "skills.tech.proto": "Prototipado funcional",
+      "skills.soft.own": "Autonomía & ownership",
+      "skills.soft.cross": "Coordinación cross-team",
+      "skills.soft.exec": "Comunicación ejecutiva",
+      "skills.soft.reg": "Entornos regulados",
+      "skills.soft.unblock": "Desbloqueo de decisiones",
+      "skills.soft.lang": "ES nativo · EN fluido",
+      "projects.title": "Proyectos destacados",
+      "projects.title.em": "— resultados reales.",
+      "projects.sub": "Productos que construí o lideré, siempre con el usuario en el centro. Métricas reales, no marketing.",
+      "proj.now": "presente",
+      "proj.bf.desc": "Producto propio para que cualquier persona <em>vea su patrimonio en un solo lugar</em>. Conecta 4 brokers (IOL, PPI, Cocos, Binance) y unifica acciones, bonos, fondos, cripto y más. Sumo features que motivan a invertir: <em>Freedom Score, racha de constancia y proyecciones a 1/3/5/10 años</em>.",
+      "proj.bf.s1": "Brokers conectados",
+      "proj.bf.s2": "Construido",
+      "proj.dolar.name": "Dólar Oficial",
+      "proj.dolar.desc": "Lancé Dólar Oficial dentro del ecosistema Ualá — una forma simple de <em>ahorrar en dólares</em> sin fricción. Coordiné negocio, legal, compliance, ops y producto para que estuviera al alcance de todos. Hoy es el <em>producto que más revenue genera</em> en la vertical Wealth.",
+      "proj.invrap.name": "Inversión Rápida",
+      "proj.invrap.desc": "Lideré el equipo que construyó la versión final de Inversión Rápida — una experiencia pensada para que <em>cualquier cliente del banco pueda invertir en pocos toques</em>. La nueva versión logró <em>10× más usuarios activos y 10× más volumen</em>.",
+      "proj.abc.name": "ABC — Acciones, bonos & CEDEARs",
+      "proj.abc.desc": "Liderando el revamp completo del producto para invertir en <em>acciones, bonos, letras y CEDEARs</em> argentinos. El objetivo: que más gente dé su <em>primer paso en el mercado</em> con una experiencia simple, clara y confiable.",
+      "proj.abc.s1": "Activos",
+      "proj.abc.s2": "Estado",
+      "proj.py.name": "Product Analytics automatizado",
+      "proj.py.desc": "Sistema propio para entender al usuario sin esperar al próximo informe: cohorts, churn, portfolios y flujos de negocio listos en horas. <em>De semanas a horas</em>, con resultados que impactan en decisiones de producto y leadership.",
+      "proj.stat.rank": "Ranking revenue",
+      "proj.stat.vertical": "Vertical",
+      "proj.stat.users": "Usuarios activos",
+      "proj.stat.volume": "Volumen",
+      "proj.stat.time": "Tiempo de análisis",
+      "proj.stat.scope": "Cobertura",
+      "now.label": "/now · qué estoy haciendo",
+      "now.text": "Liderando el revamp de <em>ABC</em> en Ualá — la experiencia para que más gente pueda invertir en acciones, bonos, letras y CEDEARs. En paralelo: explorando <em>agentes de Claude</em> para entender mejor al usuario y acelerar el discovery.",
+      "now.role": "Rol",
+      "now.role.v": "Category Lead · Wealth",
+      "now.org": "Empresa",
+      "now.loc": "Ubicación",
+      "now.book": "Leyendo",
+      "now.code": "Codeando",
+      "now.upd": "Actualizado",
+      "contact.cta": "¿Construimos<br/>algo juntos?",
+      "contact.wa": "enviar mensaje",
+      "footer.built": "construido a mano con HTML, CSS y mate"
+    },
+    en: {
+      "nav.role": "Product Manager",
+      "nav.skills": "skills",
+      "nav.projects": "projects",
+      "nav.now": "now",
+      "nav.contact": "contact",
+      "hero.location": "Córdoba, Argentina",
+      "hero.years": "6+ years in product",
+      "hero.status": "Always building",
+      "hero.is": "brings",
+      "hero.tagline": "Product Manager in <em>fintech and banking</em>. I build high-impact <em>investment and savings</em> products — teaching people how to save, invest and protect their capital. I put the user at the center and combine <em>discovery, data and delivery</em> without asking permission.",
+      "hero.panel.title": "CAREER · 6Y",
+      "hero.panel.live": "LIVE",
+      "skills.title": "Skills",
+      "skills.title.em": "— a living stack.",
+      "skills.sub": "How I think when building, what I use to understand the user, and where I can drop into code without waiting for anyone.",
+      "skills.cap": "capabilities",
+      "skills.tools": "tools",
+      "skills.cat.product": "Product",
+      "skills.cat.data": "Data & Analytics",
+      "skills.cat.tech": "Tech",
+      "skills.cat.soft": "Soft",
+      "skills.cat.tools": "Tools",
+      "skills.product.user": "User-centric thinking",
+      "skills.product.disc": "Discovery",
+      "skills.product.road": "Roadmapping",
+      "skills.product.wealth": "Wealth strategy",
+      "skills.product.kpi": "Metrics & KPIs",
+      "skills.product.ux": "UX simplification",
+      "skills.product.prio": "Prioritization & backlog",
+      "skills.product.b2c": "B2C · B2B",
+      "skills.data.think": "Analytical thinking",
+      "skills.data.deci": "Data-driven decisions",
+      "skills.data.cohort": "Cohorts & churn",
+      "skills.data.port": "Portfolio analysis",
+      "skills.data.dash": "Dashboards & viz",
+      "skills.data.funnel": "Funnels & conversion",
+      "skills.tech.build": "Building my own products",
+      "skills.tech.auto": "AI automation",
+      "skills.tech.int": "Integrations & APIs",
+      "skills.tech.bridge": "Bridge business ↔ tech",
+      "skills.tech.data": "Data modeling",
+      "skills.tech.proto": "Functional prototyping",
+      "skills.soft.own": "Autonomy & ownership",
+      "skills.soft.cross": "Cross-team coordination",
+      "skills.soft.exec": "Executive communication",
+      "skills.soft.reg": "Regulated environments",
+      "skills.soft.unblock": "Unblocking decisions",
+      "skills.soft.lang": "ES native · EN fluent",
+      "projects.title": "Selected projects",
+      "projects.title.em": "— real outcomes.",
+      "projects.sub": "Products I built or led, always with the user at the center. Real metrics, not marketing.",
+      "proj.now": "present",
+      "proj.bf.desc": "My own product so anyone can <em>see their entire wealth in one place</em>. Connects 4 brokers (IOL, PPI, Cocos, Binance) and unifies stocks, bonds, funds, crypto and more. With features that motivate people to keep investing: <em>Freedom Score, consistency streak and 1/3/5/10-year projections</em>.",
+      "proj.bf.s1": "Brokers integrated",
+      "proj.bf.s2": "Built",
+      "proj.dolar.name": "Dólar Oficial",
+      "proj.dolar.desc": "I launched Dólar Oficial inside Ualá — a simple, frictionless way for anyone to <em>save in US dollars</em>. I coordinated business, legal, compliance, ops and product to make it accessible to everyone. Today it's the <em>top revenue-generating product</em> in the Wealth vertical.",
+      "proj.invrap.name": "Inversión Rápida",
+      "proj.invrap.desc": "Led the team that built the final version of Inversión Rápida — an experience designed so <em>any bank customer can invest in just a few taps</em>. The new version delivered <em>10× more active users and 10× more volume</em>.",
+      "proj.abc.name": "ABC — Stocks, bonds & CEDEARs",
+      "proj.abc.desc": "Leading the full revamp of the product to invest in <em>Argentine stocks, bonds, T-bills and CEDEARs</em>. The goal: help more people take their <em>first step into the market</em> with a simple, clear and trustworthy experience.",
+      "proj.abc.s1": "Asset types",
+      "proj.abc.s2": "Status",
+      "proj.py.name": "Automated Product Analytics",
+      "proj.py.desc": "My own system to understand the user without waiting for the next report: cohorts, churn, portfolios and business flows ready in hours. <em>From weeks to hours</em>, with results that drive product and leadership decisions.",
+      "proj.stat.rank": "Revenue rank",
+      "proj.stat.vertical": "Vertical",
+      "proj.stat.users": "Active users",
+      "proj.stat.volume": "Volume",
+      "proj.stat.time": "Analysis time",
+      "proj.stat.scope": "Coverage",
+      "now.label": "/now · what I'm doing",
+      "now.text": "Leading the revamp of <em>ABC</em> at Ualá — the experience to help more people invest in stocks, bonds, T-bills and CEDEARs. In parallel: exploring <em>Claude agents</em> to understand the user better and speed up discovery.",
+      "now.role": "Role",
+      "now.role.v": "Category Lead · Wealth",
+      "now.org": "Company",
+      "now.loc": "Location",
+      "now.book": "Reading",
+      "now.code": "Coding",
+      "now.upd": "Updated",
+      "contact.cta": "Want to build<br/>something together?",
+      "contact.wa": "send a message",
+      "footer.built": "handcrafted with HTML, CSS and mate"
+    }
+  };
+
+  let currentLang = "es";
+
+  function applyLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const k = el.getAttribute("data-i18n");
+      if (I18N[lang][k] !== undefined) el.textContent = I18N[lang][k];
+    });
+    document.querySelectorAll("[data-i18n-html]").forEach(el => {
+      const k = el.getAttribute("data-i18n-html");
+      if (I18N[lang][k] !== undefined) el.innerHTML = I18N[lang][k];
+    });
+    document.querySelectorAll(".lang-toggle button").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+    });
+    setupScramble();
+    updateUpdated();
+  }
+
+  document.querySelectorAll(".lang-toggle button").forEach(b => {
+    b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+  });
+
+  // ---------- TICKER TAPE ----------
+  const tickers = [
+    { sym: "MDG",      name: "Marcos D.G.",           p: "+10.0×", c: "+0.2",  up: true },
+    { sym: "USD/OFC",  name: "Dólar Oficial",          p: "#1",     c: "RANK",  up: true },
+    { sym: "INV.RAP",  name: "Inversión Rápida",       p: "10×",    c: "USERS", up: true },
+    { sym: "FCI",      name: "Fondos Comunes",         p: "AUM↑",   c: "+",     up: true },
+    { sym: "PY/CLD",   name: "Python · Claude",        p: "−95%",   c: "TIME",  up: true },
+    { sym: "MEP",      name: "Dólar MEP",              p: "OK",     c: "LIVE",  up: true },
+    { sym: "ABC",      name: "ABC · Acciones",         p: "WIP",    c: "DEV",   up: true },
+    { sym: "SQL",      name: "Redshift · BigQuery",    p: "ADV",    c: "—",     up: null },
+    { sym: "FIG",      name: "Figma",                  p: "OK",     c: "—",     up: null },
+    { sym: "AR/EN",    name: "ES · EN",                p: "FLU",    c: "—",     up: null },
+    { sym: "B2C",      name: "Customer-centric",       p: "✓",      c: "—",     up: null },
+    { sym: "B2B",      name: "Asset Manager",          p: "✓",      c: "—",     up: null }
+  ];
+
+  function buildTape() {
+    const track = document.getElementById("tape-track");
+    const make = (t) => {
+      const cls = t.up === true ? "up" : t.up === false ? "dn" : "";
+      const arrow = t.up === true ? "▲" : t.up === false ? "▼" : "·";
+      return `<span class="tk"><b>${t.sym}</b> <span style="color:var(--fg-mute)">${t.name}</span> <span class="v">${t.p}</span> <span class="ch ${cls}">${arrow} ${t.c}</span></span>`;
+    };
+    const seq = tickers.map(make).join("");
+    track.innerHTML = seq + seq;
+  }
+  buildTape();
+
+  // ---------- HERO SPARK ----------
+  function buildSpark() {
+    const W = 300, H = 56, N = 60;
+    const pts = [];
+    for (let i = 0; i < N; i++) {
+      const t = i / (N - 1);
+      let v = Math.pow(t, 1.6) * 0.85 + 0.08;
+      v += (Math.sin(i * 0.7) * 0.025) + (Math.cos(i * 1.3) * 0.018);
+      pts.push(v);
+    }
+    const max = Math.max(...pts), min = Math.min(...pts);
+    const xy = pts.map((v, i) => {
+      const x = (i / (N - 1)) * W;
+      const y = H - ((v - min) / (max - min)) * (H - 6) - 3;
+      return [x, y];
+    });
+    const linePath = xy.map((p, i) => (i === 0 ? "M" : "L") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+    const areaPath = linePath + ` L ${W} ${H} L 0 ${H} Z`;
+    document.getElementById("spark-line").setAttribute("d", linePath);
+    document.getElementById("spark-area").setAttribute("d", areaPath);
+  }
+  buildSpark();
+
+  // ---------- HERO PRICE FLICKER ----------
+  (function priceFlicker() {
+    const el = document.getElementById("hero-price");
+    const ch = document.getElementById("hero-change");
+    const base = 10.0;
+    setInterval(() => {
+      const delta = (Math.random() - 0.3) * 0.4;
+      const v = (base + delta).toFixed(2);
+      el.textContent = "+" + v + "×";
+      const pct = (delta / base * 100).toFixed(2);
+      ch.textContent = (delta >= 0 ? "▲ +" : "▼ ") + Math.abs(pct) + "%";
+      ch.style.color = delta >= 0 ? "var(--accent)" : "var(--down)";
+    }, 1800);
+  })();
+
+  // ---------- SCRAMBLE EFFECT ----------
+  const SCRAMBLE_CHARS = "▓░▒█01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&";
+  function scrambleTo(el, target, duration = 900) {
+    cancelAnimationFrame(el._raf);
+    const start = performance.now();
+    function frame(now) {
+      const t = Math.min(1, (now - start) / duration);
+      let out = "";
+      for (let i = 0; i < target.length; i++) {
+        const reveal = i / target.length;
+        if (t > reveal + 0.15) {
+          out += target[i];
+        } else {
+          out += SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+        }
+      }
+      el.textContent = out;
+      if (t < 1) el._raf = requestAnimationFrame(frame);
+      else el.textContent = target;
+    }
+    el._raf = requestAnimationFrame(frame);
+  }
+
+  let scrambleInterval = null;
+  function setupScramble() {
+    if (scrambleInterval) clearInterval(scrambleInterval);
+    const el = document.querySelector(".scramble");
+    if (!el) return;
+    const words = el.getAttribute("data-words-" + currentLang).split("|");
+    let idx = 0;
+    scrambleTo(el, words[0], 700);
+    scrambleInterval = setInterval(() => {
+      idx = (idx + 1) % words.length;
+      scrambleTo(el, words[idx], 900);
+    }, 3200);
+  }
+
+  // ---------- REVEAL ON SCROLL ----------
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("in");
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  // ---------- PARALLAX FLOATERS ----------
+  const FLOATER_DATA = [
+    { txt: "AUM ↑ 10×",        up: true  },
+    { txt: "CSAT ▲ 4.6",       up: true  },
+    { txt: "MEP · LIVE",       up: true  },
+    { txt: "−95% time",        up: true  },
+    { txt: "FCI · 24/7",       up: null  },
+    { txt: "py.script(✓)",     up: null  },
+    { txt: "SELECT *",         up: null  },
+    { txt: "claude.complete()",up: null  },
+    { txt: "USD ▲ +0.04",      up: true  },
+    { txt: "churn ▼ −12%",     up: true  },
+    { txt: "ABC · revamp",     up: null  },
+    { txt: "discovery → ship", up: null  }
+  ];
+
+  function buildFloaters() {
+    const c = document.getElementById("floaters");
+    FLOATER_DATA.forEach((f, i) => {
+      const el = document.createElement("div");
+      el.className = "floater" + (f.up === true ? " up" : f.up === false ? " dn" : "");
+      el.textContent = f.txt;
+      el.style.left = (5 + (i * 17) % 90) + "%";
+      el.style.top = (10 + (i * 31) % 240) + "vh";
+      el.style.fontSize = (10 + (i % 3) * 2) + "px";
+      el.dataset.depth = (0.05 + (i % 4) * 0.06).toFixed(2);
+      c.appendChild(el);
+    });
+  }
+  buildFloaters();
+
+  function onScroll() {
+    const y = window.scrollY;
+    document.querySelectorAll(".floater").forEach(el => {
+      const d = parseFloat(el.dataset.depth);
+      el.style.transform = `translateY(${(-y * d).toFixed(1)}px)`;
+    });
+    const panel = document.getElementById("hero-panel");
+    if (panel) panel.style.transform = `translateY(${(y * 0.08).toFixed(1)}px)`;
+  }
+  let ticking = false;
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      requestAnimationFrame(() => { onScroll(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // ---------- LIVE CLOCK ----------
+  function tick() {
+    const d = new Date();
+    const timeOpts = { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, timeZone: "America/Argentina/Buenos_Aires" };
+    const dateOpts = { day: "2-digit", month: "short", year: "numeric" };
+    const locale = currentLang === "en" ? "en-GB" : "es-AR";
+    const time = d.toLocaleTimeString(locale, timeOpts);
+    const date = d.toLocaleDateString(locale, dateOpts);
+    const cl = document.getElementById("clock");
+    if (cl) cl.textContent = `${date} · ${time} · BUE`;
+  }
+  setInterval(tick, 1000);
+  tick();
+
+  function updateUpdated() {
+    const d = new Date();
+    const locale = currentLang === "en" ? "en-GB" : "es-AR";
+    const fmt = d.toLocaleDateString(locale, { day: "2-digit", month: "short", year: "numeric" });
+    const el = document.getElementById("now-updated");
+    if (el) el.textContent = fmt.toLowerCase();
+  }
+
+  // ---------- INIT ----------
+  applyLang("es");
+
+  // Skill meta flicker on hover
+  document.querySelectorAll(".skill-meta b").forEach(b => {
+    const orig = b.textContent;
+    b.parentElement.addEventListener("mouseenter", () => {
+      let count = 0;
+      const it = setInterval(() => {
+        b.textContent = String(Math.floor(Math.random() * 99)).padStart(2, "0");
+        if (++count > 6) { clearInterval(it); b.textContent = orig; }
+      }, 50);
+    });
+  });
+
+  // Easter egg: type "claude"
+  let buf = "";
+  window.addEventListener("keydown", (e) => {
+    buf = (buf + e.key.toLowerCase()).slice(-6);
+    if (buf === "claude") {
+      document.documentElement.style.setProperty("--accent", "#FF6B35");
+      document.documentElement.style.setProperty("--accent-dim", "#a14820");
+      setTimeout(() => {
+        document.documentElement.style.setProperty("--accent", "#7CFF6B");
+        document.documentElement.style.setProperty("--accent-dim", "#3d8a35");
+      }, 2200);
+    }
+  });
+  </script>
+</body>
+</html>
