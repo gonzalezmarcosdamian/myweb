@@ -235,25 +235,19 @@
       color: var(--fg-mute);
       font-style: italic;
       font-weight: 300;
-      position: relative;
-      height: 1.15em;
     }
-    .hero h1 .scramble-wrap{
-      display: block;
-      position: absolute;
-      top: 1.25em;
-      left: 0;
-      line-height: 1.15;
-    }
-    .hero h1 .scramble{
-      display: inline;
-      color: var(--accent);
+    .scramble-wrap{
       font-family: var(--mono);
-      font-style: normal;
-      font-weight: 500;
-      font-size: 0.55em;
+      font-size: clamp(20px, 2.8vw, 42px);
+      font-weight: 600;
+      color: var(--accent);
       letter-spacing: -0.02em;
+      line-height: 1.15;
+      min-height: 1.3em;
+      margin-top: 4px;
+      margin-bottom: 36px;
     }
+    .scramble{ display: inline; }
 
     .hero-grid{
       display: grid;
@@ -757,6 +751,7 @@
 
     /* ---------- TYPING CURSOR ---------- */
     .scramble-wrap::after{
+      display: inline;
       content: "▋";
       font-family: var(--mono);
       color: var(--accent);
@@ -779,7 +774,7 @@
     @media (max-width: 600px){
       section{ padding: 72px 0; }
 
-      .hero h1 .scramble{ font-size: 0.45em; }
+      .scramble-wrap{ font-size: clamp(16px, 5vw, 24px); margin-bottom: 24px; }
 
       .section-head{
         grid-template-columns: 1fr;
@@ -853,13 +848,14 @@
 
       <h1>
         <span class="name">Marcos D.<br/><span class="glitch" data-text="González.">González.</span></span>
-        <span class="role">
-          <span data-i18n="hero.is">especializado en</span>
-          <span class="scramble-wrap"><span class="scramble"
-            data-words-es="productos de inversión y ahorro|discovery y estrategia de producto|datos, métricas e impacto|roadmaps que se convierten en features|productos financieros de alto impacto"
-            data-words-en="investment and savings products|product discovery and strategy|data, metrics and impact|roadmaps that ship as features|high-impact financial products">productos de inversión y ahorro</span></span>
-        </span>
+        <span class="role" data-i18n="hero.is">especializado en</span>
       </h1>
+
+      <div class="scramble-wrap">
+        <span class="scramble"
+          data-words-es="productos de inversión y ahorro|discovery y estrategia de producto|datos, métricas e impacto|roadmaps que se convierten en features|productos financieros de alto impacto"
+          data-words-en="investment and savings products|product discovery and strategy|data, metrics and impact|roadmaps that ship as features|high-impact financial products">productos de inversión y ahorro</span>
+      </div>
 
       <div class="hero-grid">
         <p class="hero-tagline" data-i18n-html="hero.tagline">
