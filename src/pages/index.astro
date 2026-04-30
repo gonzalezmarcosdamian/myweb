@@ -699,6 +699,31 @@
     @media (prefers-reduced-motion: reduce){
       *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
+
+    @media (max-width: 600px){
+      section{ padding: 72px 0; }
+
+      .section-head{
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 40px;
+      }
+      .section-num{ display: none; }
+      .section-sub{ grid-column: 1 / -1; }
+
+      .skills-grid{ grid-template-columns: 1fr; }
+      .skill-group{ grid-column: 1 / -1; }
+
+      .projects{ grid-template-columns: 1fr; }
+      .projects-list{ grid-column: 1 / -1; }
+
+      .now-grid{ grid-template-columns: 1fr; }
+      .now-content{ grid-column: 1 / -1; }
+
+      .contact-grid{ grid-template-columns: 1fr; }
+      .contact-main{ grid-column: 1 / -1; }
+      .contact-cta{ font-size: clamp(32px, 10vw, 56px); margin-bottom: 32px; }
+    }
   </style>
 </head>
 <body>
