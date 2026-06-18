@@ -1055,6 +1055,34 @@
           <article class="project">
             <div class="project-head">
               <div class="project-symbol">
+                <span>BCRA · OPEN DATA</span>
+                <span class="badge live">LIVE</span>
+              </div>
+              <h3 class="project-name">
+                <a href="https://bcralearning-gonzalezmarcosdamians-projects.vercel.app" target="_blank" rel="noopener" style="color:inherit;">
+                  <span data-i18n="proj.bcra.name">El dólar del BCRA, explicado</span> <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗</span>
+                </a>
+              </h3>
+              <div class="project-org"><span data-i18n="proj.bcra.org">Proyecto propio · datos abiertos</span> · 2026</div>
+            </div>
+            <div class="project-desc" data-i18n-html="proj.bcra.desc">
+              Proyecto educativo y de <em>datos abiertos</em>: convierte los informes mensuales del BCRA en una historia clara de <em>quién compra y quién vende dólares</em> en el mercado oficial. Gráficos por actor (personas, agro, BCRA), serie descargable en CSV y un pipeline que se actualiza solo.
+            </div>
+            <div class="project-stats">
+              <div class="stat">
+                <span class="label" data-i18n="proj.bcra.s1.l">Actualización</span>
+                <span class="value" data-i18n="proj.bcra.s1.v">Diaria</span>
+              </div>
+              <div class="stat">
+                <span class="label" data-i18n="proj.bcra.s2.l">Datos</span>
+                <span class="value neutral" data-i18n="proj.bcra.s2.v">Abiertos</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-head">
+              <div class="project-symbol">
                 <span>FCI · INV.RAPIDA</span>
                 <span class="badge">SHIPPED</span>
               </div>
@@ -1242,6 +1270,13 @@
       "proj.bf.s2": "Construido",
       "proj.dolar.name": "Dólar Oficial",
       "proj.dolar.desc": "Lancé Dólar Oficial dentro del ecosistema Ualá — una forma simple de <em>ahorrar en dólares</em> sin fricción. Coordiné negocio, legal, compliance, ops y producto para que estuviera al alcance de todos. Hoy es el <em>producto que más revenue genera</em> en la vertical Wealth.",
+      "proj.bcra.name": "El dólar del BCRA, explicado",
+      "proj.bcra.org": "Proyecto propio · datos abiertos",
+      "proj.bcra.desc": "Proyecto educativo y de <em>datos abiertos</em>: convierte los informes mensuales del BCRA en una historia clara de <em>quién compra y quién vende dólares</em> en el mercado oficial. Gráficos por actor (personas, agro, BCRA), serie descargable en CSV y un pipeline que se actualiza solo.",
+      "proj.bcra.s1.l": "Actualización",
+      "proj.bcra.s1.v": "Diaria",
+      "proj.bcra.s2.l": "Datos",
+      "proj.bcra.s2.v": "Abiertos",
       "proj.invrap.name": "Inversión Rápida",
       "proj.invrap.desc": "Lideré el equipo que construyó la versión final de Inversión Rápida — una experiencia pensada para que <em>cualquier cliente del banco pueda invertir en pocos toques</em>. La nueva versión logró <em>10× más usuarios activos y 10× más volumen</em>.",
       "proj.py.name": "Product Analytics automatizado",
@@ -1324,6 +1359,13 @@
       "proj.bf.s2": "Built",
       "proj.dolar.name": "Dólar Oficial",
       "proj.dolar.desc": "I launched Dólar Oficial inside Ualá — a simple, frictionless way for anyone to <em>save in US dollars</em>. I coordinated business, legal, compliance, ops and product to make it accessible to everyone. Today it's the <em>top revenue-generating product</em> in the Wealth vertical.",
+      "proj.bcra.name": "The BCRA dollar, explained",
+      "proj.bcra.org": "Personal project · open data",
+      "proj.bcra.desc": "An educational, <em>open-data</em> project: it turns the BCRA's monthly reports into a clear story of <em>who buys and who sells dollars</em> in the official market. Per-actor charts (households, agro, the central bank), a downloadable CSV series and a pipeline that updates itself.",
+      "proj.bcra.s1.l": "Updates",
+      "proj.bcra.s1.v": "Daily",
+      "proj.bcra.s2.l": "Data",
+      "proj.bcra.s2.v": "Open",
       "proj.invrap.name": "Inversión Rápida",
       "proj.invrap.desc": "Led the team that built the final version of Inversión Rápida — an experience designed so <em>any bank customer can invest in just a few taps</em>. The new version delivered <em>10× more active users and 10× more volume</em>.",
       "proj.py.name": "Automated Product Analytics",
@@ -1378,6 +1420,7 @@
   const tickers = [
     { sym: "MDG",      name: "Marcos D.G.",           p: "+10.0×", c: "+0.2",  up: true },
     { sym: "USD/OFC",  name: "Dólar Oficial",          p: "#1",     c: "RANK",  up: true },
+    { sym: "BCRA",     name: "Dólar · Open Data",      p: "LIVE",   c: "CSV",   up: true },
     { sym: "INV.RAP",  name: "Inversión Rápida",       p: "10×",    c: "USERS", up: true },
     { sym: "FCI",      name: "Fondos Comunes",         p: "AUM↑",   c: "+",     up: true },
     { sym: "PY/CLD",   name: "Python · Claude",        p: "−95%",   c: "TIME",  up: true },
