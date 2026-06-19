@@ -433,13 +433,43 @@
       grid-template-columns: 80px 1fr;
       gap: 24px;
     }
+    .projects-col{ grid-column: 2 / -1; }
+    .proj-tabs{
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .proj-tab{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--fg-mute);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+    .proj-tab:hover{ color: var(--fg); border-color: var(--line-2); }
+    .proj-tab.active{
+      color: var(--accent);
+      border-color: var(--accent-dim);
+      background: rgba(124,255,107,0.05);
+    }
+    .proj-tab .count{
+      margin-left: 7px;
+      color: var(--fg-mute);
+      font-size: 10px;
+    }
+    .proj-tab.active .count{ color: var(--accent); }
     .projects-list{
-      grid-column: 2 / -1;
       display: grid;
       gap: 1px;
       background: var(--line);
       border: 1px solid var(--line);
     }
+    .projects-list[hidden]{ display: none; }
     .project{
       background: var(--bg);
       padding: 32px 28px;
@@ -788,7 +818,7 @@
       .skill-group{ grid-column: 1 / -1; }
 
       .projects{ grid-template-columns: 1fr; }
-      .projects-list{ grid-column: 1 / -1; }
+      .projects-col{ grid-column: 1 / -1; }
 
       .now-grid{ grid-template-columns: 1fr; }
       .now-content{ grid-column: 1 / -1; }
@@ -998,159 +1028,178 @@
 
       <div class="projects reveal">
         <div></div>
-        <div class="projects-list">
+        <div class="projects-col">
 
-          <article class="project">
-            <div class="project-head">
-              <div class="project-symbol">
-                <span>BLD · BUILDFUTURE</span>
-                <span class="badge live">LIVE</span>
-              </div>
-              <h3 class="project-name">
-                <a href="https://buildfuture.com.ar" target="_blank" rel="noopener" style="color:inherit;">
-                  BuildFuture <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗</span>
-                </a>
-              </h3>
-              <div class="project-org">buildfuture.com.ar · 2024–<span data-i18n="proj.now">presente</span></div>
-            </div>
-            <div class="project-desc" data-i18n-html="proj.bf.desc">
-              Producto propio para que cualquier persona <em>vea su patrimonio en un solo lugar</em>. Conecta 4 brokers (IOL, PPI, Cocos, Binance) y unifica acciones, bonos, fondos, cripto y más. Sumo features que motivan a invertir: <em>Freedom Score, racha de constancia y proyecciones a 1/3/5/10 años</em>.
-            </div>
-            <div class="project-stats">
-              <div class="stat">
-                <span class="label" data-i18n="proj.bf.s1">Brokers conectados</span>
-                <span class="value">4</span>
-              </div>
-              <div class="stat">
-                <span class="label" data-i18n="proj.bf.s2">Construido</span>
-                <span class="value neutral">E2E</span>
-              </div>
-            </div>
-          </article>
+          <div class="proj-tabs" role="tablist" aria-label="Filtrar proyectos">
+            <button class="proj-tab active" role="tab" aria-selected="true" data-tab="personal">
+              <span data-i18n="projects.tab.personal">Personales</span><span class="count">2</span>
+            </button>
+            <button class="proj-tab" role="tab" aria-selected="false" data-tab="corp">
+              <span data-i18n="projects.tab.corp">Para empresas</span><span class="count">4</span>
+            </button>
+          </div>
 
-          <article class="project">
-            <div class="project-head">
-              <div class="project-symbol">
-                <span>USD · OFICIAL</span>
-                <span class="badge live">LIVE</span>
-              </div>
-              <h3 class="project-name" data-i18n="proj.dolar.name">Dólar Oficial</h3>
-              <div class="project-org">Ualá · 2025–<span data-i18n="proj.now">presente</span></div>
-            </div>
-            <div class="project-desc" data-i18n-html="proj.dolar.desc">
-              Lancé Dólar Oficial dentro del ecosistema Ualá — una forma simple de <em>ahorrar en dólares</em> sin fricción. Coordiné negocio, legal, compliance, ops y producto para que estuviera al alcance de todos. Hoy es el <em>producto que más revenue genera</em> en la vertical Wealth.
-            </div>
-            <div class="project-stats">
-              <div class="stat">
-                <span class="label" data-i18n="proj.stat.rank">Ranking revenue</span>
-                <span class="value">#1</span>
-              </div>
-              <div class="stat">
-                <span class="label" data-i18n="proj.stat.vertical">Vertical</span>
-                <span class="value neutral">Wealth</span>
-              </div>
-            </div>
-          </article>
+          <!-- PERSONAL PROJECTS — propios, por fecha desc -->
+          <div class="projects-list" data-panel="personal">
 
-          <article class="project">
-            <div class="project-head">
-              <div class="project-symbol">
-                <span>BCRA · OPEN DATA</span>
-                <span class="badge live">LIVE</span>
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>BCRA · OPEN DATA</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name">
+                  <a href="https://bcralearning-gonzalezmarcosdamians-projects.vercel.app" target="_blank" rel="noopener" style="color:inherit;">
+                    <span data-i18n="proj.bcra.name">El dólar del BCRA, explicado</span> <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗</span>
+                  </a>
+                </h3>
+                <div class="project-org"><span data-i18n="proj.bcra.org">Proyecto propio · datos abiertos</span> · 2026</div>
               </div>
-              <h3 class="project-name">
-                <a href="https://bcralearning-gonzalezmarcosdamians-projects.vercel.app" target="_blank" rel="noopener" style="color:inherit;">
-                  <span data-i18n="proj.bcra.name">El dólar del BCRA, explicado</span> <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗</span>
-                </a>
-              </h3>
-              <div class="project-org"><span data-i18n="proj.bcra.org">Proyecto propio · datos abiertos</span> · 2026</div>
-            </div>
-            <div class="project-desc" data-i18n-html="proj.bcra.desc">
-              Proyecto educativo y de <em>datos abiertos</em>: convierte los informes mensuales del BCRA en una historia clara de <em>quién compra y quién vende dólares</em> en el mercado oficial. Gráficos por actor (personas, agro, BCRA), serie descargable en CSV y un pipeline que se actualiza solo.
-            </div>
-            <div class="project-stats">
-              <div class="stat">
-                <span class="label" data-i18n="proj.bcra.s1.l">Actualización</span>
-                <span class="value" data-i18n="proj.bcra.s1.v">Diaria</span>
+              <div class="project-desc" data-i18n-html="proj.bcra.desc">
+                Proyecto educativo y de <em>datos abiertos</em>: convierte los informes mensuales del BCRA en una historia clara de <em>quién compra y quién vende dólares</em> en el mercado oficial. Gráficos por actor (personas, agro, BCRA), serie descargable en CSV y un pipeline que se actualiza solo.
               </div>
-              <div class="stat">
-                <span class="label" data-i18n="proj.bcra.s2.l">Datos</span>
-                <span class="value neutral" data-i18n="proj.bcra.s2.v">Abiertos</span>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label" data-i18n="proj.bcra.s1.l">Actualización</span>
+                  <span class="value" data-i18n="proj.bcra.s1.v">Diaria</span>
+                </div>
+                <div class="stat">
+                  <span class="label" data-i18n="proj.bcra.s2.l">Datos</span>
+                  <span class="value neutral" data-i18n="proj.bcra.s2.v">Abiertos</span>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="project">
-            <div class="project-head">
-              <div class="project-symbol">
-                <span>FCI · INV.RAPIDA</span>
-                <span class="badge">SHIPPED</span>
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>BLD · BUILDFUTURE</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name">
+                  <a href="https://buildfuture.com.ar" target="_blank" rel="noopener" style="color:inherit;">
+                    BuildFuture <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗</span>
+                  </a>
+                </h3>
+                <div class="project-org">buildfuture.com.ar · 2024–<span data-i18n="proj.now">presente</span></div>
               </div>
-              <h3 class="project-name" data-i18n="proj.invrap.name">Inversión Rápida</h3>
-              <div class="project-org">Banco Supervielle · 2024</div>
-            </div>
-            <div class="project-desc" data-i18n-html="proj.invrap.desc">
-              Lideré el equipo que construyó la versión final de Inversión Rápida — una experiencia pensada para que <em>cualquier cliente del banco pueda invertir en pocos toques</em>. La nueva versión logró <em>10× más usuarios activos y 10× más volumen</em>.
-            </div>
-            <div class="project-stats">
-              <div class="stat">
-                <span class="label" data-i18n="proj.stat.users">Usuarios activos</span>
-                <span class="value">10×</span>
+              <div class="project-desc" data-i18n-html="proj.bf.desc">
+                Producto propio para que cualquier persona <em>vea su patrimonio en un solo lugar</em>. Conecta 4 brokers (IOL, PPI, Cocos, Binance) y unifica acciones, bonos, fondos, cripto y más. Sumo features que motivan a invertir: <em>Freedom Score, racha de constancia y proyecciones a 1/3/5/10 años</em>.
               </div>
-              <div class="stat">
-                <span class="label" data-i18n="proj.stat.volume">Volumen</span>
-                <span class="value">10×</span>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label" data-i18n="proj.bf.s1">Brokers conectados</span>
+                  <span class="value">4</span>
+                </div>
+                <div class="stat">
+                  <span class="label" data-i18n="proj.bf.s2">Construido</span>
+                  <span class="value neutral">E2E</span>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="project">
-            <div class="project-head">
-              <div class="project-symbol">
-                <span>ABC · ACC.BONOS.CEDEARS</span>
-                <span class="badge live">LIVE</span>
-              </div>
-              <h3 class="project-name" data-i18n="proj.abc.name">ABC — Acciones, bonos &amp; CEDEARs</h3>
-              <div class="project-org">Ualá · 2025–<span data-i18n="proj.now">presente</span></div>
-            </div>
-            <div class="project-desc" data-i18n-html="proj.abc.desc">
-              Lideré el revamp completo del producto para invertir en <em>acciones, bonos, letras y CEDEARs</em> argentinos. Ya está disponible para que más gente dé su <em>primer paso en el mercado</em> con una experiencia simple, clara y confiable.
-            </div>
-            <div class="project-stats">
-              <div class="stat">
-                <span class="label" data-i18n="proj.abc.s1">Activos</span>
-                <span class="value neutral" data-i18n="proj.abc.s1.v">4 tipos</span>
-              </div>
-              <div class="stat">
-                <span class="label" data-i18n="proj.abc.s2">Estado</span>
-                <span class="value" data-i18n="proj.abc.s2.v">Lanzado</span>
-              </div>
-            </div>
-          </article>
+          </div>
 
-          <article class="project">
-            <div class="project-head">
-              <div class="project-symbol">
-                <span>OPS · ANALYTICS</span>
-                <span class="badge live">LIVE</span>
+          <!-- CORPORATE PROJECTS — laburos para empresas, por fecha desc -->
+          <div class="projects-list" data-panel="corp" hidden>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>USD · OFICIAL</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name" data-i18n="proj.dolar.name">Dólar Oficial</h3>
+                <div class="project-org">Ualá · 2025–<span data-i18n="proj.now">presente</span></div>
               </div>
-              <h3 class="project-name" data-i18n="proj.py.name">Product Analytics automatizado</h3>
-              <div class="project-org">Ualá · 2025</div>
-            </div>
-            <div class="project-desc" data-i18n-html="proj.py.desc">
-              Sistema propio para entender al usuario sin esperar al próximo informe: cohorts, churn, portfolios y flujos de negocio listos en horas. <em>De semanas a horas</em>, con resultados que impactan en decisiones de producto y leadership.
-            </div>
-            <div class="project-stats">
-              <div class="stat">
-                <span class="label" data-i18n="proj.stat.time">Tiempo de análisis</span>
-                <span class="value">−95%</span>
+              <div class="project-desc" data-i18n-html="proj.dolar.desc">
+                Lancé Dólar Oficial dentro del ecosistema Ualá — una forma simple de <em>ahorrar en dólares</em> sin fricción. Coordiné negocio, legal, compliance, ops y producto para que estuviera al alcance de todos. Hoy es el <em>producto que más revenue genera</em> en la vertical Wealth.
               </div>
-              <div class="stat">
-                <span class="label" data-i18n="proj.stat.scope">Cobertura</span>
-                <span class="value neutral">5 prods</span>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label" data-i18n="proj.stat.rank">Ranking revenue</span>
+                  <span class="value">#1</span>
+                </div>
+                <div class="stat">
+                  <span class="label" data-i18n="proj.stat.vertical">Vertical</span>
+                  <span class="value neutral">Wealth</span>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>ABC · ACC.BONOS.CEDEARS</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name" data-i18n="proj.abc.name">ABC — Acciones, bonos &amp; CEDEARs</h3>
+                <div class="project-org">Ualá · 2025–<span data-i18n="proj.now">presente</span></div>
+              </div>
+              <div class="project-desc" data-i18n-html="proj.abc.desc">
+                Lideré el revamp completo del producto para invertir en <em>acciones, bonos, letras y CEDEARs</em> argentinos. Ya está disponible para que más gente dé su <em>primer paso en el mercado</em> con una experiencia simple, clara y confiable.
+              </div>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label" data-i18n="proj.abc.s1">Activos</span>
+                  <span class="value neutral" data-i18n="proj.abc.s1.v">4 tipos</span>
+                </div>
+                <div class="stat">
+                  <span class="label" data-i18n="proj.abc.s2">Estado</span>
+                  <span class="value" data-i18n="proj.abc.s2.v">Lanzado</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>OPS · ANALYTICS</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name" data-i18n="proj.py.name">Product Analytics automatizado</h3>
+                <div class="project-org">Ualá · 2025</div>
+              </div>
+              <div class="project-desc" data-i18n-html="proj.py.desc">
+                Sistema propio para entender al usuario sin esperar al próximo informe: cohorts, churn, portfolios y flujos de negocio listos en horas. <em>De semanas a horas</em>, con resultados que impactan en decisiones de producto y leadership.
+              </div>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label" data-i18n="proj.stat.time">Tiempo de análisis</span>
+                  <span class="value">−95%</span>
+                </div>
+                <div class="stat">
+                  <span class="label" data-i18n="proj.stat.scope">Cobertura</span>
+                  <span class="value neutral">5 prods</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>FCI · INV.RAPIDA</span>
+                  <span class="badge">SHIPPED</span>
+                </div>
+                <h3 class="project-name" data-i18n="proj.invrap.name">Inversión Rápida</h3>
+                <div class="project-org">Banco Supervielle · 2024</div>
+              </div>
+              <div class="project-desc" data-i18n-html="proj.invrap.desc">
+                Lideré el equipo que construyó la versión final de Inversión Rápida — una experiencia pensada para que <em>cualquier cliente del banco pueda invertir en pocos toques</em>. La nueva versión logró <em>10× más usuarios activos y 10× más volumen</em>.
+              </div>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label" data-i18n="proj.stat.users">Usuarios activos</span>
+                  <span class="value">10×</span>
+                </div>
+                <div class="stat">
+                  <span class="label" data-i18n="proj.stat.volume">Volumen</span>
+                  <span class="value">10×</span>
+                </div>
+              </div>
+            </article>
+
+          </div>
 
         </div>
       </div>
@@ -1286,6 +1335,8 @@
       "projects.title": "Proyectos destacados",
       "projects.title.em": "— resultados reales.",
       "projects.sub": "Productos que construí o lideré, siempre con el usuario en el centro. Métricas reales, no marketing.",
+      "projects.tab.personal": "Personales",
+      "projects.tab.corp": "Para empresas",
       "proj.now": "presente",
       "proj.bf.desc": "Producto propio para que cualquier persona <em>vea su patrimonio en un solo lugar</em>. Conecta 4 brokers (IOL, PPI, Cocos, Binance) y unifica acciones, bonos, fondos, cripto y más. Sumo features que motivan a invertir: <em>Freedom Score, racha de constancia y proyecciones a 1/3/5/10 años</em>.",
       "proj.bf.s1": "Brokers conectados",
@@ -1381,6 +1432,8 @@
       "projects.title": "Selected projects",
       "projects.title.em": "— real outcomes.",
       "projects.sub": "Products I built or led, always with the user at the center. Real metrics, not marketing.",
+      "projects.tab.personal": "Personal",
+      "projects.tab.corp": "For companies",
       "proj.now": "present",
       "proj.bf.desc": "My own product so anyone can <em>see their entire wealth in one place</em>. Connects 4 brokers (IOL, PPI, Cocos, Binance) and unifies stocks, bonds, funds, crypto and more. With features that motivate people to keep investing: <em>Freedom Score, consistency streak and 1/3/5/10-year projections</em>.",
       "proj.bf.s1": "Brokers integrated",
@@ -1699,6 +1752,23 @@
     });
   }, { threshold: 0.5 });
   document.querySelectorAll(".project").forEach(p => counterObs.observe(p));
+
+  // ---------- PROJECT TABS ----------
+  (function projectTabs(){
+    const tabs   = document.querySelectorAll(".proj-tab");
+    const panels = document.querySelectorAll(".projects-list");
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const target = tab.dataset.tab;
+        tabs.forEach(t => {
+          const on = t === tab;
+          t.classList.toggle("active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        panels.forEach(p => { p.hidden = p.dataset.panel !== target; });
+      });
+    });
+  })();
 
   // ---------- SPARKLINE DRAW ANIMATION ----------
   (function animateSpark(){
