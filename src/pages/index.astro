@@ -463,6 +463,29 @@
       font-size: 10px;
     }
     .proj-tab.active .count{ color: var(--accent); }
+    /* featured = proyectos propios, destacados aunque no estén activos */
+    .proj-tab.featured{
+      color: var(--fg);
+      border-color: var(--accent-dim);
+    }
+    .proj-tab.featured:hover{ border-color: var(--accent); }
+    .proj-tab .tab-dot{
+      display: inline-block;
+      width: 6px; height: 6px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 7px var(--accent);
+      vertical-align: middle;
+      animation: tabPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes tabPulse{
+      0%, 100%{ opacity: 1; transform: scale(1); }
+      50%{ opacity: 0.4; transform: scale(0.82); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .proj-tab .tab-dot{ animation: none; }
+    }
     .projects-list{
       display: grid;
       gap: 1px;
@@ -728,32 +751,6 @@
     }
     .reveal.in{ opacity: 1; transform: none; }
 
-    /* ---------- CUSTOM CURSOR ---------- */
-    .cursor, .cursor-ring{ opacity: 0; pointer-events: none; }
-    @media (pointer: fine){
-      body.cursor-ready *, body.cursor-ready *::before, body.cursor-ready *::after{ cursor: none !important; }
-      .cursor{
-        position: fixed; z-index: 9999;
-        width: 8px; height: 8px; border-radius: 50%;
-        background: var(--accent);
-        pointer-events: none;
-        transition: width 0.2s, height 0.2s, opacity 0.3s;
-        box-shadow: 0 0 10px var(--accent);
-        will-change: transform;
-        top: 0; left: 0;
-      }
-      .cursor-ring{
-        position: fixed; z-index: 9998;
-        width: 32px; height: 32px; border-radius: 50%;
-        border: 1px solid rgba(124,255,107,0.4);
-        pointer-events: none;
-        transition: width 0.35s ease, height 0.35s ease, border-color 0.2s, opacity 0.3s;
-        will-change: transform;
-        top: 0; left: 0;
-      }
-      .cursor.hover{ width: 14px; height: 14px; }
-      .cursor-ring.hover{ width: 48px; height: 48px; border-color: rgba(124,255,107,0.7); }
-    }
 
     /* ---------- GLITCH ---------- */
     @keyframes glitch-1{
@@ -830,10 +827,6 @@
   </style>
 </head>
 <body>
-
-  <!-- CURSOR -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursor-ring"></div>
 
   <!-- TICKER TAPE -->
   <div class="tape" aria-hidden="true">
@@ -1031,16 +1024,16 @@
         <div class="projects-col">
 
           <div class="proj-tabs" role="tablist" aria-label="Filtrar proyectos">
-            <button class="proj-tab active" role="tab" aria-selected="true" data-tab="personal">
-              <span data-i18n="projects.tab.personal">Personales</span><span class="count">2</span>
+            <button class="proj-tab featured" role="tab" aria-selected="false" data-tab="personal">
+              <span class="tab-dot" aria-hidden="true"></span><span data-i18n="projects.tab.personal">Personales</span><span class="count">2</span>
             </button>
-            <button class="proj-tab" role="tab" aria-selected="false" data-tab="corp">
+            <button class="proj-tab active" role="tab" aria-selected="true" data-tab="corp">
               <span data-i18n="projects.tab.corp">Para empresas</span><span class="count">4</span>
             </button>
           </div>
 
           <!-- PERSONAL PROJECTS — propios, por fecha desc -->
-          <div class="projects-list" data-panel="personal">
+          <div class="projects-list" data-panel="personal" hidden>
 
             <article class="project">
               <div class="project-head">
@@ -1101,7 +1094,7 @@
           </div>
 
           <!-- CORPORATE PROJECTS — laburos para empresas, por fecha desc -->
-          <div class="projects-list" data-panel="corp" hidden>
+          <div class="projects-list" data-panel="corp">
 
             <article class="project">
               <div class="project-head">
@@ -1680,45 +1673,6 @@
       }, 2200);
     }
   });
-
-  // ---------- CUSTOM CURSOR ----------
-  (function initCursor(){
-    const cur = document.getElementById("cursor");
-    const ring = document.getElementById("cursor-ring");
-    if (!cur || !ring || window.matchMedia("(pointer: coarse)").matches) return;
-
-    let mx = -200, my = -200, rx = -200, ry = -200, ready = false;
-
-    document.addEventListener("mousemove", e => {
-      mx = e.clientX; my = e.clientY;
-      cur.style.left = mx + "px";
-      cur.style.top  = my + "px";
-      cur.style.transform = "translate(-50%,-50%)";
-      if (!ready){
-        ready = true;
-        document.body.classList.add("cursor-ready");
-        cur.style.opacity  = "1";
-        ring.style.opacity = "1";
-      }
-    }, { passive: true });
-
-    (function animRing(){
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.left = rx + "px";
-      ring.style.top  = ry + "px";
-      ring.style.transform = "translate(-50%,-50%)";
-      requestAnimationFrame(animRing);
-    })();
-
-    document.querySelectorAll("a, button, .skill, .project, .contact-link").forEach(el => {
-      el.addEventListener("mouseenter", () => { cur.classList.add("hover"); ring.classList.add("hover"); });
-      el.addEventListener("mouseleave", () => { cur.classList.remove("hover"); ring.classList.remove("hover"); });
-    });
-
-    document.addEventListener("mouseleave", () => { cur.style.opacity = "0"; ring.style.opacity = "0"; });
-    document.addEventListener("mouseenter", () => { if (ready) { cur.style.opacity = "1"; ring.style.opacity = "1"; } });
-  })();
 
   // ---------- ANIMATED COUNTERS ----------
   function animateCounter(el){
