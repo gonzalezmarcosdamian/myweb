@@ -9,16 +9,42 @@
   <title>Marcos Damián González — Product Manager · Inversiones &amp; Banca Digital</title>
   <meta name="description" content="Product Manager con +6 años liderando productos de inversión y ahorro en fintech y banca. Especializado en discovery, datos y automatización con IA." />
   <meta name="author" content="Marcos Damián González" />
+  <meta name="theme-color" content="#0a0a0a" />
+
   <meta property="og:title" content="Marcos Damián González — Product Manager · Inversiones &amp; Banca Digital" />
   <meta property="og:description" content="PM con +6 años construyendo productos de inversión y ahorro en fintech y banca argentina. Discovery, datos y automatización con IA." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://marcosdamiangonzalez.ar/" />
+  <meta property="og:site_name" content="Marcos Damián González" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:image" content="https://marcosdamiangonzalez.ar/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Marcos Damián González — Product Manager · Inversiones &amp; Banca Digital" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Marcos Damián González — Product Manager · Inversiones &amp; Banca Digital" />
+  <meta name="twitter:description" content="PM con +6 años construyendo productos de inversión y ahorro en fintech y banca argentina." />
+  <meta name="twitter:image" content="https://marcosdamiangonzalez.ar/og.png" />
   <link rel="canonical" href="https://marcosdamiangonzalez.ar/" />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Marcos Damián González",
+    jobTitle: "Product Manager · Inversiones & Banca Digital",
+    url: "https://marcosdamiangonzalez.ar/",
+    image: "https://marcosdamiangonzalez.ar/og.png",
+    address: { "@type": "PostalAddress", addressLocality: "Córdoba", addressCountry: "AR" },
+    knowsLanguage: ["es", "en"],
+    sameAs: [
+      "https://www.linkedin.com/in/marcosdamiangonzalez",
+      "https://instagram.com/dagonzalz"
+    ]
+  })} />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     :root{
@@ -29,7 +55,7 @@
       --line-2:    #2a2a2a;
       --fg:        #e7e5e0;
       --fg-dim:    #8a8a8a;
-      --fg-mute:   #555555;
+      --fg-mute:   #6a6a6a;
       --accent:    #76CE6B;
       --accent-dim:#3a7a33;
       --down:      #E0655D;
@@ -66,6 +92,14 @@
 
     a{ color: inherit; text-decoration: none; }
     button{ background:none; border:none; color:inherit; font: inherit; cursor:pointer; }
+
+    /* Foco visible para navegación por teclado (no afecta al mouse) */
+    :focus-visible{
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+    :focus:not(:focus-visible){ outline: none; }
 
     .wrap{
       max-width: var(--max);
@@ -182,6 +216,19 @@
     }
     .lang-toggle button.active{ background: var(--fg); color: var(--bg); }
     .lang-toggle button:not(.active):hover{ color: var(--fg); }
+
+    .cv-btn{
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--fg-dim);
+      border: 1px solid var(--line-2);
+      border-radius: 999px;
+      padding: 5px 12px;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .cv-btn:hover{ color: var(--accent); border-color: var(--accent-dim); }
 
     @media (max-width: 720px){
       .nav-links{ display: none; }
@@ -825,6 +872,7 @@
         <a href="#now" data-i18n="nav.now">now</a>
         <a href="#contact" data-i18n="nav.contact">contacto</a>
       </div>
+      <a id="cv-link" class="cv-btn" href="/CV_ES_GonzalezMarcosDamian.pdf" download title="Descargar CV">CV<span aria-hidden="true"> ↓</span></a>
       <div class="lang-toggle" role="group" aria-label="Language">
         <button data-lang="es" class="active">ES</button>
         <button data-lang="en">EN</button>
@@ -1469,7 +1517,15 @@
     }
   };
 
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   let currentLang = "es";
+  const savedLang = (() => { try { return localStorage.getItem("lang"); } catch (e) { return null; } })();
+  if (savedLang === "es" || savedLang === "en") {
+    currentLang = savedLang;
+  } else if ((navigator.language || "").toLowerCase().startsWith("en")) {
+    currentLang = "en";
+  }
 
   function applyLang(lang) {
     currentLang = lang;
@@ -1487,6 +1543,13 @@
     });
     setupScramble();
     updateUpdated();
+
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+    const cv = document.getElementById("cv-link");
+    if (cv) {
+      cv.setAttribute("href", lang === "en" ? "/CV_EN_GonzalezMarcosDamian.pdf" : "/CV_ES_GonzalezMarcosDamian.pdf");
+      cv.setAttribute("title", lang === "en" ? "Download CV" : "Descargar CV");
+    }
   }
 
   document.querySelectorAll(".lang-toggle button").forEach(b => {
@@ -1546,11 +1609,15 @@
   buildSpark();
 
   // ---------- HERO PRICE FLICKER ----------
-  (function priceFlicker() {
+  /** @type {number | null} */
+  let priceTimer = null;
+  function startPriceFlicker() {
+    if (priceTimer) return;
     const el = document.getElementById("hero-price");
     const ch = document.getElementById("hero-change");
+    if (!el || !ch) return;
     const base = 10.0;
-    setInterval(() => {
+    priceTimer = setInterval(() => {
       const delta = (Math.random() - 0.3) * 0.25;
       const v = (base + delta).toFixed(2);
       el.textContent = "+" + v + "×";
@@ -1558,7 +1625,8 @@
       ch.textContent = (delta >= 0 ? "▲ +" : "▼ ") + Math.abs(pct) + "%";
       ch.style.color = delta >= 0 ? "var(--accent)" : "var(--down)";
     }, 2800);
-  })();
+  }
+  if (!REDUCED_MOTION) startPriceFlicker();
 
   // ---------- SCRAMBLE EFFECT ----------
   const SCRAMBLE_CHARS = "▓░▒█01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&";
@@ -1583,12 +1651,14 @@
     el._raf = requestAnimationFrame(frame);
   }
 
+  /** @type {number | null} */
   let scrambleInterval = null;
   function setupScramble() {
     if (scrambleInterval) clearInterval(scrambleInterval);
     const el = document.querySelector(".scramble");
     if (!el) return;
     const words = el.getAttribute("data-words-" + currentLang).split("|");
+    if (REDUCED_MOTION) { el.textContent = words[0]; return; }
     let idx = 0;
     scrambleTo(el, words[0], 700);
     scrambleInterval = setInterval(() => {
@@ -1631,7 +1701,8 @@
     const cl = document.getElementById("clock");
     if (cl) cl.textContent = `${date} · ${time} · BUE`;
   }
-  setInterval(tick, 1000);
+  /** @type {number | null} */
+  let clockTimer = setInterval(tick, 1000);
   tick();
 
   function updateUpdated() {
@@ -1643,7 +1714,7 @@
   }
 
   // ---------- INIT ----------
-  applyLang("es");
+  applyLang(currentLang);
 
   // Skill meta flicker on hover
   document.querySelectorAll(".skill-meta b").forEach(b => {
@@ -1672,8 +1743,10 @@
   });
 
   // ---------- ANIMATED COUNTERS ----------
-  function animateCounter(el){
-    const raw = el.textContent.trim();
+  /** @param {Element} node */
+  function animateCounter(node){
+    const el = /** @type {HTMLElement} */ (node);
+    const raw = (el.textContent || "").trim();
     const prefix = raw.match(/^[#−-]/) ? raw[0] : "";
     const suffix = raw.match(/[×%×]$/) ? raw.slice(-1) : (raw.match(/[a-zA-Z]+$/) ? "" : "");
     const num = parseFloat(raw.replace(/[^0-9.]/g, ""));
@@ -1697,7 +1770,8 @@
   const counterObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
-      e.target.querySelectorAll(".stat .value").forEach(el => {
+      e.target.querySelectorAll(".stat .value").forEach(node => {
+        const el = /** @type {HTMLElement} */ (node);
         if (!el.dataset.animated) animateCounter(el);
       });
     });
@@ -1723,7 +1797,7 @@
 
   // ---------- SPARKLINE DRAW ANIMATION ----------
   (function animateSpark(){
-    const line = document.getElementById("spark-line");
+    const line = /** @type {SVGPathElement | null} */ (document.getElementById("spark-line"));
     if (!line) return;
     const len = line.getTotalLength();
     line.style.strokeDasharray = len;
@@ -1733,8 +1807,10 @@
   })();
 
   // ---------- MAGNETIC CONTACT LINKS ----------
-  document.querySelectorAll(".contact-link").forEach(el => {
-    el.addEventListener("mousemove", e => {
+  document.querySelectorAll(".contact-link").forEach(node => {
+    const el = /** @type {HTMLElement} */ (node);
+    el.addEventListener("mousemove", ev => {
+      const e = /** @type {MouseEvent} */ (ev);
       const r = el.getBoundingClientRect();
       const dx = (e.clientX - r.left - r.width  / 2) * 0.18;
       const dy = (e.clientY - r.top  - r.height / 2) * 0.18;
@@ -1745,6 +1821,21 @@
       el.style.transform = "";
       setTimeout(() => { el.style.transition = ""; }, 400);
     });
+  });
+
+  // ---------- PAUSAR TIMERS CON LA PESTAÑA OCULTA (batería) ----------
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (scrambleInterval) { clearInterval(scrambleInterval); scrambleInterval = null; }
+      if (priceTimer) { clearInterval(priceTimer); priceTimer = null; }
+      if (clockTimer) { clearInterval(clockTimer); clockTimer = null; }
+    } else {
+      if (!clockTimer) { tick(); clockTimer = setInterval(tick, 1000); }
+      if (!REDUCED_MOTION) {
+        if (!scrambleInterval) setupScramble();
+        startPriceFlicker();
+      }
+    }
   });
 
   </script>
