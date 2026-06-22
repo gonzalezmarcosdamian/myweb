@@ -27,12 +27,12 @@
       --bg-3:      #161616;
       --line:      #1f1f1f;
       --line-2:    #2a2a2a;
-      --fg:        #f2f2f2;
+      --fg:        #e7e5e0;
       --fg-dim:    #8a8a8a;
       --fg-mute:   #555555;
-      --accent:    #7CFF6B;
-      --accent-dim:#3d8a35;
-      --down:      #FF4D4D;
+      --accent:    #76CE6B;
+      --accent-dim:#3a7a33;
+      --down:      #E0655D;
       --warm:      #E8E0D0;
       --grid:      rgba(255,255,255,0.025);
 
@@ -137,12 +137,12 @@
     .logo .dot{
       width: 8px; height: 8px; border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 12px var(--accent);
-      animation: pulse 2s ease-in-out infinite;
+      box-shadow: 0 0 5px var(--accent);
+      animation: pulse 2.8s ease-in-out infinite;
     }
     @keyframes pulse{
       0%,100%{ opacity: 1; transform: scale(1); }
-      50%   { opacity: 0.5; transform: scale(0.85); }
+      50%   { opacity: 0.68; transform: scale(0.9); }
     }
 
     .nav-right{ display: flex; align-items: center; gap: 20px; }
@@ -213,12 +213,12 @@
       border: 1px solid var(--accent-dim);
       border-radius: 999px;
       color: var(--accent);
-      background: rgba(124,255,107,0.05);
+      background: rgba(118,206,107,0.05);
     }
     .status-pill .dot{
       width: 6px; height: 6px; border-radius: 50%;
       background: var(--accent);
-      animation: pulse 1.5s ease-in-out infinite;
+      animation: pulse 2.4s ease-in-out infinite;
     }
 
     .hero h1{
@@ -455,7 +455,7 @@
     .proj-tab.active{
       color: var(--accent);
       border-color: var(--accent-dim);
-      background: rgba(124,255,107,0.05);
+      background: rgba(118,206,107,0.05);
     }
     .proj-tab .count{
       margin-left: 7px;
@@ -475,13 +475,13 @@
       margin-right: 8px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 7px var(--accent);
+      box-shadow: 0 0 3px var(--accent);
       vertical-align: middle;
-      animation: tabPulse 2.2s ease-in-out infinite;
+      animation: tabPulse 3s ease-in-out infinite;
     }
     @keyframes tabPulse{
       0%, 100%{ opacity: 1; transform: scale(1); }
-      50%{ opacity: 0.4; transform: scale(0.82); }
+      50%{ opacity: 0.6; transform: scale(0.9); }
     }
     @media (prefers-reduced-motion: reduce){
       .proj-tab .tab-dot{ animation: none; }
@@ -533,7 +533,7 @@
     .project-symbol .badge.live{
       color: var(--accent);
       border-color: var(--accent-dim);
-      background: rgba(124,255,107,0.05);
+      background: rgba(118,206,107,0.05);
     }
     .project-name{
       font-family: var(--serif);
@@ -619,7 +619,7 @@
     }
     .now-label .dot{
       width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-      animation: pulse 1.5s ease-in-out infinite;
+      animation: pulse 2.4s ease-in-out infinite;
     }
     .now-text{
       font-family: var(--serif);
@@ -755,15 +755,15 @@
     /* ---------- GLITCH ---------- */
     @keyframes glitch-1{
       0%,94%,100%{ clip-path: none; transform: none; }
-      95%{ clip-path: inset(20% 0 50% 0); transform: translateX(-4px); color: #FF4D4D; }
-      96%{ clip-path: inset(60% 0 10% 0); transform: translateX(4px); color: var(--accent); }
+      95%{ clip-path: inset(20% 0 50% 0); transform: translateX(-3px); color: var(--down); }
+      96%{ clip-path: inset(60% 0 10% 0); transform: translateX(3px); color: var(--accent); }
       97%{ clip-path: inset(40% 0 30% 0); transform: translateX(-2px); }
       98%{ clip-path: none; transform: none; color: inherit; }
     }
     @keyframes glitch-2{
       0%,96%,100%{ opacity: 0; }
-      95%{ opacity: 1; transform: translateX(6px); color: var(--accent); }
-      97%{ opacity: 1; transform: translateX(-6px); color: #FF4D4D; }
+      95%{ opacity: 1; transform: translateX(4px); color: var(--accent); }
+      97%{ opacity: 1; transform: translateX(-4px); color: var(--down); }
       98%{ opacity: 0; }
     }
     .glitch{ position: relative; display: inline-block; }
@@ -773,8 +773,8 @@
       font: inherit; color: inherit;
       pointer-events: none;
     }
-    .glitch::before{ animation: glitch-1 8s steps(1) infinite; }
-    .glitch::after{ animation: glitch-2 8s steps(1) infinite; opacity: 0; }
+    .glitch::before{ animation: glitch-1 14s steps(1) infinite; }
+    .glitch::after{ animation: glitch-2 14s steps(1) infinite; opacity: 0; }
 
     /* ---------- TYPING CURSOR ---------- */
     .scramble-wrap::after{
@@ -901,12 +901,12 @@
           <svg class="spark" viewBox="0 0 300 56" preserveAspectRatio="none" id="hero-spark">
             <defs>
               <linearGradient id="sparkFill" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stop-color="#7CFF6B" stop-opacity="0.35"/>
-                <stop offset="100%" stop-color="#7CFF6B" stop-opacity="0"/>
+                <stop offset="0%" stop-color="#76CE6B" stop-opacity="0.28"/>
+                <stop offset="100%" stop-color="#76CE6B" stop-opacity="0"/>
               </linearGradient>
             </defs>
             <path id="spark-area" fill="url(#sparkFill)" d=""></path>
-            <path id="spark-line" fill="none" stroke="#7CFF6B" stroke-width="1.5" d=""></path>
+            <path id="spark-line" fill="none" stroke="#76CE6B" stroke-width="1.5" d=""></path>
           </svg>
           <div class="spark-x">
             <span>2019</span><span>2021</span><span>2023</span><span>2026</span>
@@ -1590,13 +1590,13 @@
     const ch = document.getElementById("hero-change");
     const base = 10.0;
     setInterval(() => {
-      const delta = (Math.random() - 0.3) * 0.4;
+      const delta = (Math.random() - 0.3) * 0.25;
       const v = (base + delta).toFixed(2);
       el.textContent = "+" + v + "×";
       const pct = (delta / base * 100).toFixed(2);
       ch.textContent = (delta >= 0 ? "▲ +" : "▼ ") + Math.abs(pct) + "%";
       ch.style.color = delta >= 0 ? "var(--accent)" : "var(--down)";
-    }, 1800);
+    }, 2800);
   })();
 
   // ---------- SCRAMBLE EFFECT ----------
@@ -1704,8 +1704,8 @@
       document.documentElement.style.setProperty("--accent", "#FF6B35");
       document.documentElement.style.setProperty("--accent-dim", "#a14820");
       setTimeout(() => {
-        document.documentElement.style.setProperty("--accent", "#7CFF6B");
-        document.documentElement.style.setProperty("--accent-dim", "#3d8a35");
+        document.documentElement.style.setProperty("--accent", "#76CE6B");
+        document.documentElement.style.setProperty("--accent-dim", "#3a7a33");
       }, 2200);
     }
   });
