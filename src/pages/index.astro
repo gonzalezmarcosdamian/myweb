@@ -109,97 +109,53 @@
       position: relative;
     }
 
-    /* ---------- TICKER TAPE ---------- */
-    .tape{
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 38px;
-      background: rgba(10,10,10,0.85);
+    /* ---------- NAV (empata con los sub-proyectos: barra sticky mono) ---------- */
+    .nav{
+      position: sticky; top: 0;
+      z-index: 40;
+      display: flex; align-items: center; gap: 4px;
+      padding: 11px var(--pad);
+      background: rgba(10,10,10,0.8);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
-      z-index: 50;
-      overflow: hidden;
-      display: flex; align-items: center;
-    }
-    .tape::before, .tape::after{
-      content:""; position:absolute; top:0; bottom:0; width:80px; z-index:2; pointer-events:none;
-    }
-    .tape::before{ left:0; background: linear-gradient(90deg, var(--bg) 0%, transparent 100%); }
-    .tape::after{ right:0; background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%); }
-
-    .tape-track{
-      display: flex;
-      gap: 40px;
-      white-space: nowrap;
-      animation: tape-scroll 80s linear infinite;
-      padding-left: 40px;
-      will-change: transform;
-    }
-    @keyframes tape-scroll{
-      from{ transform: translateX(0); }
-      to  { transform: translateX(-50%); }
-    }
-    .tape:hover .tape-track{ animation-play-state: paused; }
-
-    .tk{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.02em;
-      display: inline-flex; align-items: center; gap: 8px;
-      color: var(--fg-dim);
-    }
-    .tk b{ color: var(--fg); font-weight: 500; letter-spacing: 0.04em; }
-    .tk .v{ color: var(--fg); font-variant-numeric: tabular-nums; }
-    .tk .ch{ font-variant-numeric: tabular-nums; }
-    .tk .ch.up{ color: var(--accent); }
-    .tk .ch.dn{ color: var(--down); }
-
-    /* ---------- NAV ---------- */
-    .nav{
-      position: fixed; top: 38px; left: 0; right: 0;
-      z-index: 40;
-      padding: 16px var(--pad);
-      display: flex; justify-content: space-between; align-items: center;
-      background: linear-gradient(to bottom, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0) 100%);
     }
     .logo{
       font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      display: inline-flex; align-items: center; gap: 10px;
-      color: var(--fg);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 9px;
+      color: var(--accent);
+      flex: 0 0 auto;
     }
+    /* punto de marca: se queda (guiño propio) pero estático, sin pulsar ni glow */
     .logo .dot{
-      width: 8px; height: 8px; border-radius: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 5px var(--accent);
-      animation: pulse 2.8s ease-in-out infinite;
+      flex: 0 0 auto;
     }
     @keyframes pulse{
       0%,100%{ opacity: 1; transform: scale(1); }
       50%   { opacity: 0.68; transform: scale(0.9); }
     }
 
-    .nav-right{ display: flex; align-items: center; gap: 20px; }
-    .nav-links{ display: flex; gap: 24px; }
+    .nav-sep{
+      width: 1px; height: 14px; background: var(--line-2);
+      margin: 0 8px; flex: 0 0 auto;
+    }
+    .nav-links{ display: flex; gap: 2px; }
     .nav-links a{
       font-family: var(--mono);
       font-size: 12px;
       color: var(--fg-dim);
       letter-spacing: 0.04em;
-      transition: color 0.2s;
-      position: relative;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
     }
-    .nav-links a:hover{ color: var(--fg); }
-    .nav-links a::before{
-      content:"["; opacity: 0; margin-right: 4px; color: var(--accent);
-      transition: opacity 0.2s;
-    }
-    .nav-links a::after{
-      content:"]"; opacity: 0; margin-left: 4px; color: var(--accent);
-      transition: opacity 0.2s;
-    }
-    .nav-links a:hover::before, .nav-links a:hover::after{ opacity: 1; }
+    .nav-links a:hover{ color: var(--fg); background: var(--bg-3); }
+    .nav-right{ display: flex; align-items: center; gap: 12px; margin-left: auto; flex: 0 0 auto; }
 
     .lang-toggle{
       display: inline-flex;
@@ -232,13 +188,13 @@
     .cv-btn:hover{ color: var(--accent); border-color: var(--accent-dim); }
 
     @media (max-width: 720px){
-      .nav-links{ display: none; }
+      .nav-links, .nav-sep{ display: none; }
     }
 
     /* ---------- HERO ---------- */
     .hero{
-      min-height: 100vh;
-      padding-top: 140px;
+      min-height: calc(100vh - 40px);
+      padding-top: 48px;
       padding-bottom: 80px;
       display: flex; flex-direction: column; justify-content: center;
       position: relative;
@@ -798,8 +754,8 @@
       font: inherit; color: inherit;
       pointer-events: none;
     }
-    .glitch::before{ animation: glitch-1 14s steps(1) infinite; }
-    .glitch::after{ animation: glitch-2 14s steps(1) infinite; opacity: 0; }
+    .glitch::before{ animation: glitch-1 20s steps(1) infinite; }
+    .glitch::after{ animation: glitch-2 20s steps(1) infinite; opacity: 0; }
 
     /* ---------- TYPING CURSOR ---------- */
     .scramble-wrap::after{
@@ -853,26 +809,20 @@
 </head>
 <body>
 
-  <!-- TICKER TAPE -->
-  <div class="tape" aria-hidden="true">
-    <div class="tape-track" id="tape-track"></div>
-  </div>
-
   <!-- NAV -->
-  <nav class="nav">
+  <nav class="nav" aria-label="Navegación">
     <a href="#top" class="logo">
-      <span class="dot"></span>
+      <span class="dot" aria-hidden="true"></span>
       <span>MDG</span>
-      <span style="color:var(--fg-mute)">/</span>
-      <span style="color:var(--fg-dim)" data-i18n="nav.role">Product Manager</span>
     </a>
+    <span class="nav-sep" aria-hidden="true"></span>
+    <div class="nav-links">
+      <a href="#skills" data-i18n="nav.skills">skills</a>
+      <a href="#projects" data-i18n="nav.projects">proyectos</a>
+      <a href="#now" data-i18n="nav.now">now</a>
+      <a href="#contact" data-i18n="nav.contact">contacto</a>
+    </div>
     <div class="nav-right">
-      <div class="nav-links">
-        <a href="#skills" data-i18n="nav.skills">skills</a>
-        <a href="#projects" data-i18n="nav.projects">proyectos</a>
-        <a href="#now" data-i18n="nav.now">now</a>
-        <a href="#contact" data-i18n="nav.contact">contacto</a>
-      </div>
       <a id="cv-link" class="cv-btn" href="/CV_ES_GonzalezMarcosDamian.pdf" download title="Descargar CV">CV<span aria-hidden="true"> ↓&#xFE0E;</span></a>
       <div class="lang-toggle" role="group" aria-label="Language">
         <button data-lang="es" class="active">ES</button>
@@ -1599,35 +1549,6 @@
     b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
   });
 
-  // ---------- TICKER TAPE ----------
-  const tickers = [
-    { sym: "MDG",      name: "Marcos D.G.",           p: "+10.0×", c: "+0.2",  up: true },
-    { sym: "USD/OFC",  name: "Dólar Oficial",          p: "#1",     c: "RANK",  up: true },
-    { sym: "BCRA",     name: "Dólar · Open Data",      p: "LIVE",   c: "CSV",   up: true },
-    { sym: "INV.RAP",  name: "Inversión Rápida",       p: "10×",    c: "USERS", up: true },
-    { sym: "FCI",      name: "Fondos Comunes",         p: "AUM↑︎", c: "+", up: true },
-    { sym: "PY/CLD",   name: "Python · Claude",        p: "−95%",   c: "TIME",  up: true },
-    { sym: "MEP",      name: "Dólar MEP",              p: "OK",     c: "LIVE",  up: true },
-    { sym: "BLD",      name: "BuildFuture",             p: "LIVE",   c: "OWN",   up: true },
-    { sym: "SQL",      name: "Redshift · BigQuery",    p: "ADV",    c: "—",     up: null },
-    { sym: "FIG",      name: "Figma",                  p: "OK",     c: "—",     up: null },
-    { sym: "AR/EN",    name: "ES · EN",                p: "FLU",    c: "—",     up: null },
-    { sym: "B2C",      name: "Customer-centric",       p: "✓",      c: "—",     up: null },
-    { sym: "B2B",      name: "Asset Manager",          p: "✓",      c: "—",     up: null }
-  ];
-
-  function buildTape() {
-    const track = document.getElementById("tape-track");
-    const make = (t) => {
-      const cls = t.up === true ? "up" : t.up === false ? "dn" : "";
-      const arrow = t.up === true ? "▲" : t.up === false ? "▼" : "·";
-      return `<span class="tk"><b>${t.sym}</b> <span style="color:var(--fg-mute)">${t.name}</span> <span class="v">${t.p}</span> <span class="ch ${cls}">${arrow} ${t.c}</span></span>`;
-    };
-    const seq = tickers.map(make).join("");
-    track.innerHTML = seq + seq;
-  }
-  buildTape();
-
   // ---------- HERO SPARK ----------
   function buildSpark() {
     const W = 300, H = 56, N = 60;
@@ -1707,7 +1628,7 @@
     scrambleInterval = setInterval(() => {
       idx = (idx + 1) % words.length;
       scrambleTo(el, words[idx], 900);
-    }, 3200);
+    }, 4200);
   }
 
   // ---------- REVEAL ON SCROLL ----------
