@@ -81,6 +81,7 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      font-variant-emoji: text; /* flechas/símbolos como texto, no emoji a color en mobile */
       background-image:
         linear-gradient(var(--grid) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid) 1px, transparent 1px);
@@ -872,7 +873,7 @@
         <a href="#now" data-i18n="nav.now">now</a>
         <a href="#contact" data-i18n="nav.contact">contacto</a>
       </div>
-      <a id="cv-link" class="cv-btn" href="/CV_ES_GonzalezMarcosDamian.pdf" download title="Descargar CV">CV<span aria-hidden="true"> ↓</span></a>
+      <a id="cv-link" class="cv-btn" href="/CV_ES_GonzalezMarcosDamian.pdf" download title="Descargar CV">CV<span aria-hidden="true"> ↓&#xFE0E;</span></a>
       <div class="lang-toggle" role="group" aria-label="Language">
         <button data-lang="es" class="active">ES</button>
         <button data-lang="en">EN</button>
@@ -1009,7 +1010,7 @@
         </div>
 
         <div class="skill-group" style="border-top: 1px dashed var(--line-2);">
-          <div class="skill-cat"><span class="idx">/→</span> <span data-i18n="skills.cat.tools">Herramientas</span></div>
+          <div class="skill-cat"><span class="idx">/→&#xFE0E;</span> <span data-i18n="skills.cat.tools">Herramientas</span></div>
           <div class="skill-list">
             <span class="skill" data-w="py">Python</span>
             <span class="skill" data-w="sql">SQL</span>
@@ -1068,7 +1069,7 @@
                 </div>
                 <h3 class="project-name">
                   <a href="https://mercado.marcosdamiangonzalez.ar/" target="_blank" rel="noopener" style="color:inherit;">
-                    <span data-i18n="proj.mkt.name">El mercado argentino, explicado</span> <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗</span>
+                    <span data-i18n="proj.mkt.name">El mercado argentino, explicado</span> <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗&#xFE0E;</span>
                   </a>
                 </h3>
                 <div class="project-org"><span data-i18n="proj.mkt.org">Proyecto propio · datos abiertos</span> · 2026</div>
@@ -1096,7 +1097,7 @@
                 </div>
                 <h3 class="project-name">
                   <a href="https://dolar.marcosdamiangonzalez.ar/" target="_blank" rel="noopener" style="color:inherit;">
-                    <span data-i18n="proj.bcra.name">El dólar del BCRA, explicado</span> <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗</span>
+                    <span data-i18n="proj.bcra.name">El dólar del BCRA, explicado</span> <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗&#xFE0E;</span>
                   </a>
                 </h3>
                 <div class="project-org"><span data-i18n="proj.bcra.org">Proyecto propio · datos abiertos</span> · 2026</div>
@@ -1124,7 +1125,7 @@
                 </div>
                 <h3 class="project-name">
                   <a href="https://buildfuture.com.ar" target="_blank" rel="noopener" style="color:inherit;">
-                    BuildFuture <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗</span>
+                    BuildFuture <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗&#xFE0E;</span>
                   </a>
                 </h3>
                 <div class="project-org">buildfuture.com.ar · 2024–<span data-i18n="proj.now">presente</span></div>
@@ -1604,7 +1605,7 @@
     { sym: "USD/OFC",  name: "Dólar Oficial",          p: "#1",     c: "RANK",  up: true },
     { sym: "BCRA",     name: "Dólar · Open Data",      p: "LIVE",   c: "CSV",   up: true },
     { sym: "INV.RAP",  name: "Inversión Rápida",       p: "10×",    c: "USERS", up: true },
-    { sym: "FCI",      name: "Fondos Comunes",         p: "AUM↑",   c: "+",     up: true },
+    { sym: "FCI",      name: "Fondos Comunes",         p: "AUM↑︎", c: "+", up: true },
     { sym: "PY/CLD",   name: "Python · Claude",        p: "−95%",   c: "TIME",  up: true },
     { sym: "MEP",      name: "Dólar MEP",              p: "OK",     c: "LIVE",  up: true },
     { sym: "BLD",      name: "BuildFuture",             p: "LIVE",   c: "OWN",   up: true },
