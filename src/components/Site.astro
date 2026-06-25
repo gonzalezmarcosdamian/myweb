@@ -1,0 +1,1547 @@
+---
+// Marcos Damián González — Personal Site (componente bilingüe: lang "es" | "en")
+// Fuentes self-host (sin Google Fonts render-blocking): solo los pesos usados.
+import '@fontsource/space-grotesk/300.css';
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/600.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import { translations, type Lang } from '../i18n';
+
+const { lang = 'es' } = Astro.props as { lang?: Lang };
+const t = translations[lang];
+
+const SITE = 'https://marcosdamiangonzalez.ar';
+const isEn = lang === 'en';
+const canonical = isEn ? `${SITE}/en/` : `${SITE}/`;
+const title = isEn
+  ? 'Marcos Damián González — Product Manager · Investing & Digital Banking'
+  : 'Marcos Damián González — Product Manager · Inversiones & Banca Digital';
+const description = isEn
+  ? 'Product Manager with 6+ years leading investment and savings products in fintech and banking. Specialized in discovery, data and AI automation.'
+  : 'Product Manager con +6 años liderando productos de inversión y ahorro en fintech y banca. Especializado en discovery, datos y automatización con IA.';
+const ogDescription = isEn
+  ? 'PM with 6+ years building investment and savings products in Argentine fintech and banking. Discovery, data and AI automation.'
+  : 'PM con +6 años construyendo productos de inversión y ahorro en fintech y banca argentina. Discovery, datos y automatización con IA.';
+const ogLocale = isEn ? 'en_US' : 'es_AR';
+const ogLocaleAlt = isEn ? 'es_AR' : 'en_US';
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="author" content="Marcos Damián González" />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={ogDescription} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content="Marcos Damián González" />
+  <meta property="og:locale" content={ogLocale} />
+  <meta property="og:locale:alternate" content={ogLocaleAlt} />
+  <meta property="og:image" content={`${SITE}/og.png`} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={title} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={ogDescription} />
+  <meta name="twitter:image" content={`${SITE}/og.png`} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang="es" href={`${SITE}/`} />
+  <link rel="alternate" hreflang="en" href={`${SITE}/en/`} />
+  <link rel="alternate" hreflang="x-default" href={`${SITE}/`} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Marcos Damián González",
+    jobTitle: isEn ? "Product Manager · Investing & Digital Banking" : "Product Manager · Inversiones & Banca Digital",
+    url: SITE + "/",
+    image: `${SITE}/og.png`,
+    address: { "@type": "PostalAddress", addressLocality: "Córdoba", addressCountry: "AR" },
+    knowsLanguage: ["es", "en"],
+    inLanguage: lang,
+    sameAs: [
+      "https://www.linkedin.com/in/marcosdamiangonzalez",
+      "https://instagram.com/dagonzalz"
+    ]
+  })} />
+
+  <!-- Fuentes self-host vía @fontsource (importadas en el frontmatter) -->
+
+
+  <style>
+    :root{
+      --bg:        #0a0a0a;
+      --bg-2:      #111111;
+      --bg-3:      #161616;
+      --line:      #1f1f1f;
+      --line-2:    #2a2a2a;
+      --fg:        #e7e5e0;
+      --fg-dim:    #8a8a8a;
+      --fg-mute:   #6a6a6a;
+      --accent:    #76CE6B;
+      --accent-dim:#3a7a33;
+      --down:      #E0655D;
+      --warm:      #E8E0D0;
+      --grid:      rgba(255,255,255,0.025);
+
+      --serif:  "Space Grotesk", sans-serif;
+      --mono:   "JetBrains Mono", ui-monospace, monospace;
+      --body:   "Inter", system-ui, sans-serif;
+
+      --max:    1280px;
+      --pad:    clamp(20px, 4vw, 64px);
+    }
+
+    *{ box-sizing: border-box; margin:0; padding:0; }
+    html{ scroll-behavior: smooth; }
+    body{
+      font-family: var(--body);
+      background: var(--bg);
+      color: var(--fg);
+      font-size: 16px;
+      line-height: 1.55;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      font-variant-emoji: text; /* flechas/símbolos como texto, no emoji a color en mobile */
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 64px 64px;
+      background-position: -1px -1px;
+    }
+
+    ::selection{ background: var(--accent); color: #000; }
+
+    a{ color: inherit; text-decoration: none; }
+    button{ background:none; border:none; color:inherit; font: inherit; cursor:pointer; }
+
+    /* Foco visible para navegación por teclado (no afecta al mouse) */
+    :focus-visible{
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+    :focus:not(:focus-visible){ outline: none; }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+      position: relative;
+    }
+
+    /* ---------- NAV (empata con los sub-proyectos: barra sticky mono) ---------- */
+    .nav{
+      position: sticky; top: 0;
+      z-index: 40;
+      display: flex; align-items: center; gap: 4px;
+      padding: 11px var(--pad);
+      background: rgba(10,10,10,0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .logo{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 9px;
+      color: var(--accent);
+      flex: 0 0 auto;
+    }
+    /* punto de marca: se queda (guiño propio) pero estático, sin pulsar ni glow */
+    .logo .dot{
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      flex: 0 0 auto;
+    }
+    @keyframes pulse{
+      0%,100%{ opacity: 1; transform: scale(1); }
+      50%   { opacity: 0.68; transform: scale(0.9); }
+    }
+
+    .nav-sep{
+      width: 1px; height: 14px; background: var(--line-2);
+      margin: 0 8px; flex: 0 0 auto;
+    }
+    .nav-links{ display: flex; gap: 2px; }
+    .nav-links a{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--fg-dim);
+      letter-spacing: 0.04em;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover{ color: var(--fg); background: var(--bg-3); }
+    .nav-right{ display: flex; align-items: center; gap: 12px; margin-left: auto; flex: 0 0 auto; }
+
+    .lang-toggle{
+      display: inline-flex;
+      border: 1px solid var(--line-2);
+      border-radius: 999px;
+      overflow: hidden;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+    .lang-toggle a{
+      padding: 5px 11px;
+      color: var(--fg-dim);
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+    }
+    .lang-toggle a.active{ background: var(--fg); color: var(--bg); }
+    .lang-toggle a:not(.active):hover{ color: var(--fg); }
+
+    .cv-btn{
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--fg-dim);
+      border: 1px solid var(--line-2);
+      border-radius: 999px;
+      padding: 5px 12px;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .cv-btn:hover{ color: var(--accent); border-color: var(--accent-dim); }
+
+    @media (max-width: 720px){
+      .nav-links, .nav-sep{ display: none; }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero{
+      min-height: calc(100vh - 40px);
+      padding-top: 48px;
+      padding-bottom: 80px;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative;
+    }
+
+    .hero-meta{
+      display: flex; align-items: center; gap: 16px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+      flex-wrap: wrap;
+    }
+    .hero-meta .sep{ width: 30px; height: 1px; background: var(--line-2); }
+    .status-pill{
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 4px 10px;
+      border: 1px solid var(--accent-dim);
+      border-radius: 999px;
+      color: var(--accent);
+      background: rgba(118,206,107,0.05);
+    }
+    .status-pill .dot{
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    .hero h1{
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(48px, 8.4vw, 128px);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      margin-bottom: 36px;
+    }
+    .hero h1 .name{ display: block; }
+    .hero h1 .role{
+      display: block;
+      color: var(--fg-mute);
+      font-style: italic;
+      font-weight: 300;
+    }
+    .scramble-wrap{
+      font-family: var(--mono);
+      font-size: clamp(20px, 2.8vw, 42px);
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      min-height: 1.3em;
+      margin-top: 4px;
+      margin-bottom: 36px;
+    }
+    .scramble{ display: inline; }
+
+    .hero-grid{
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 60px;
+      align-items: end;
+    }
+    @media (max-width: 880px){
+      .hero-grid{ grid-template-columns: 1fr; gap: 40px; }
+    }
+    .hero-left{ display: flex; flex-direction: column; align-items: flex-start; gap: 26px; }
+    .hero-cta-btn{
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em;
+      color: var(--bg); background: var(--accent);
+      padding: 12px 22px; border-radius: 8px;
+      transition: filter 0.2s, transform 0.2s;
+    }
+    .hero-cta-btn:hover{ filter: brightness(1.08); transform: translateY(-1px); }
+
+    .hero-tagline{
+      font-family: var(--body);
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height: 1.55;
+      color: var(--fg-dim);
+      max-width: 560px;
+    }
+    .hero-tagline em{
+      color: var(--fg);
+      font-style: normal;
+      border-bottom: 1px dashed var(--accent-dim);
+    }
+
+    /* sparkline panel */
+    .panel{
+      border: 1px solid var(--line);
+      background: rgba(17,17,17,0.6);
+      backdrop-filter: blur(6px);
+      padding: 18px 20px;
+      position: relative;
+    }
+    .panel::before, .panel::after,
+    .panel .corner-tr, .panel .corner-bl{
+      content:"+";
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .panel::before{ top: -5px; left: -5px; }
+    .panel::after{  bottom: -5px; right: -5px; }
+    .panel .corner-tr{ top: -5px; right: -5px; }
+    .panel .corner-bl{ bottom: -5px; left: -5px; }
+
+    .panel-head{
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .panel-head .live{ color: var(--accent); }
+
+    .quote{
+      display: flex; align-items: baseline; gap: 12px;
+      margin-bottom: 12px;
+      font-family: var(--mono);
+    }
+    .quote .symbol{ font-size: 13px; color: var(--fg); letter-spacing: 0.06em; }
+    .quote .price{ font-size: 28px; font-weight: 500; color: var(--fg); font-variant-numeric: tabular-nums; }
+    .quote .change{ font-size: 12px; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+    .spark{ width: 100%; height: 56px; display: block; }
+    .spark-x{
+      display: flex; justify-content: space-between;
+      font-family: var(--mono); font-size: 9px;
+      color: var(--fg-mute); margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ---------- SECTIONS ---------- */
+    section{ position: relative; padding: 120px 0; }
+    .section-head{
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      margin-bottom: 64px;
+      align-items: baseline;
+    }
+    .section-num{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+    }
+    .section-title{
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(32px, 4vw, 56px);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+    .section-title em{
+      color: var(--fg-mute);
+      font-style: italic;
+      font-weight: 300;
+    }
+    .section-sub{
+      grid-column: 2 / -1;
+      max-width: 600px;
+      margin-top: 12px;
+      color: var(--fg-dim);
+      font-size: 15px;
+    }
+
+    /* ---------- SKILLS ---------- */
+    .skills-grid{
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+    }
+    .skill-group{
+      grid-column: 2 / -1;
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      display: grid;
+      grid-template-columns: 200px 1fr auto;
+      gap: 32px;
+      align-items: baseline;
+      transition: padding 0.3s ease;
+      cursor: default;
+    }
+    .skill-group:hover{ padding-left: 12px; }
+    .skill-group:last-child{ border-bottom: 1px solid var(--line); }
+
+    .skill-cat{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .skill-cat .idx{ color: var(--accent); }
+
+    .skill-list{
+      display: flex; flex-wrap: wrap; gap: 8px 14px;
+    }
+    .skill{
+      font-family: var(--body);
+      font-size: 17px;
+      color: var(--fg);
+      position: relative;
+      padding: 4px 0;
+      cursor: default;
+      transition: color 0.2s;
+    }
+    .skill::after{
+      content: attr(data-w);
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--fg-mute);
+      vertical-align: super;
+      margin-left: 2px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .skill:hover{ color: var(--accent); }
+    .skill:hover::after{ opacity: 1; }
+
+    .skill-meta{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.06em;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .skill-meta b{ color: var(--fg); font-weight: 500; }
+
+    @media (max-width: 760px){
+      .skill-group{ grid-template-columns: 1fr; gap: 12px; }
+      .skill-meta{ text-align: left; }
+    }
+
+    /* ---------- PROJECTS ---------- */
+    .projects{
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+    }
+    .projects-col{ grid-column: 2 / -1; }
+    .proj-tabs{
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .proj-tab{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--fg-mute);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+    .proj-tab:hover{ color: var(--fg); border-color: var(--line-2); }
+    .proj-tab.active{
+      color: var(--accent);
+      border-color: var(--accent-dim);
+      background: rgba(118,206,107,0.05);
+    }
+    .proj-tab .count{
+      margin-left: 7px;
+      color: var(--fg-mute);
+      font-size: 10px;
+    }
+    .proj-tab.active .count{ color: var(--accent); }
+    /* featured = proyectos propios, destacados aunque no estén activos */
+    .proj-tab.featured{
+      color: var(--fg);
+      border-color: var(--accent-dim);
+    }
+    .proj-tab.featured:hover{ border-color: var(--accent); }
+    .proj-tab .tab-dot{
+      display: inline-block;
+      width: 6px; height: 6px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 3px var(--accent);
+      vertical-align: middle;
+      animation: tabPulse 3s ease-in-out infinite;
+    }
+    @keyframes tabPulse{
+      0%, 100%{ opacity: 1; transform: scale(1); }
+      50%{ opacity: 0.6; transform: scale(0.9); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .proj-tab .tab-dot{ animation: none; }
+    }
+    .projects-list{
+      display: grid;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .projects-list[hidden]{ display: none; }
+    .project{
+      background: var(--bg);
+      padding: 32px 28px;
+      display: grid;
+      grid-template-columns: 1.5fr 2fr 1fr;
+      gap: 32px;
+      align-items: start;
+      position: relative;
+      transition: background 0.3s ease;
+      cursor: default;
+    }
+    .project::before{
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: var(--accent);
+      transform: scaleY(0); transform-origin: bottom;
+      transition: transform 0.4s ease;
+    }
+    .project:hover{ background: var(--bg-2); }
+    .project:hover::before{ transform: scaleY(1); transform-origin: top; }
+
+    .project-head{
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .project-symbol{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .project-symbol .badge{
+      padding: 2px 6px;
+      border: 1px solid var(--line-2);
+      color: var(--fg-dim);
+      border-radius: 3px;
+      font-size: 9px;
+    }
+    .project-symbol .badge.live{
+      color: var(--accent);
+      border-color: var(--accent-dim);
+      background: rgba(118,206,107,0.05);
+    }
+    .project-name{
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .project-org{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+
+    .project-desc{
+      color: var(--fg-dim);
+      font-size: 14.5px;
+      line-height: 1.55;
+      max-width: 460px;
+    }
+    .project-desc em{ color: var(--fg); font-style: normal; }
+
+    .project-stats{
+      display: flex; flex-direction: column; gap: 14px;
+      align-items: flex-end;
+      text-align: right;
+    }
+    .stat{ font-family: var(--mono); }
+    .stat .label{
+      font-size: 10px;
+      color: var(--fg-mute);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .stat .value{
+      font-size: 22px;
+      color: var(--accent);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat .value.neutral{ color: var(--fg); }
+
+    @media (max-width: 880px){
+      .project{ grid-template-columns: 1fr; gap: 20px; }
+      .project-stats{ flex-direction: row; align-items: flex-start; text-align: left; gap: 28px; }
+    }
+
+    /* ---------- NOW SECTION ---------- */
+    .now{
+      background: var(--bg-2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 80px 0;
+      margin: 60px 0;
+    }
+    .now-grid{
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+    }
+    .now-content{
+      grid-column: 2 / -1;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    @media (max-width: 760px){
+      .now-content{ grid-template-columns: 1fr; gap: 32px; }
+    }
+    .now-label{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 16px;
+    }
+    .now-label .dot{
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    .now-text{
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.6vw, 30px);
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      font-weight: 400;
+    }
+    .now-text em{ color: var(--accent); font-style: normal; }
+
+    .now-meta{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--fg-dim);
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+    }
+    .now-meta .row{
+      display: flex; justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    .now-meta .row:last-child{ border-bottom: none; }
+    .now-meta .k{ color: var(--fg-mute); }
+    .now-meta .v{ color: var(--fg); }
+
+    /* ---------- CONTACT ---------- */
+    .contact{ padding: 120px 0 100px; }
+    .contact-grid{
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+    }
+    .contact-main{ grid-column: 2 / -1; }
+    .contact-cta{
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(40px, 6vw, 88px);
+      line-height: 0.95;
+      letter-spacing: -0.035em;
+      margin-bottom: 56px;
+    }
+    .contact-cta em{
+      color: var(--fg-mute);
+      font-style: italic;
+      font-weight: 300;
+    }
+    .contact-cta a{
+      color: var(--accent);
+      position: relative;
+      display: inline-block;
+    }
+    .contact-cta a::after{
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0.06em;
+      height: 1px; background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s cubic-bezier(.7,0,.3,1);
+    }
+    .contact-cta a:hover::after{ transform: scaleX(1); }
+
+    .contact-links{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .contact-link{
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      width: 60px; height: 60px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .contact-link:hover{ background: var(--bg-2); border-color: var(--accent-dim); }
+    .contact-link .ico{
+      width: 22px; height: 22px;
+      stroke: var(--fg-dim); fill: none; stroke-width: 1.6;
+      transition: stroke 0.2s, fill 0.2s;
+      flex: 0 0 auto;
+    }
+    .contact-link .ico.fill{ fill: var(--fg-dim); stroke: none; }
+    .contact-link:hover .ico{ stroke: var(--accent); }
+    .contact-link:hover .ico.fill{ fill: var(--accent); stroke: none; }
+
+    /* ---------- FOOTER ---------- */
+    footer{
+      border-top: 1px solid var(--line);
+      padding: 32px var(--pad);
+      margin-top: 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-mute);
+      letter-spacing: 0.04em;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer .clock{ color: var(--fg-dim); font-variant-numeric: tabular-nums; }
+
+    /* ---------- REVEAL ---------- */
+    .reveal{
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+    }
+    .reveal.in{ opacity: 1; transform: none; }
+
+
+    /* ---------- GLITCH ---------- */
+    @keyframes glitch-1{
+      0%,94%,100%{ clip-path: none; transform: none; }
+      95%{ clip-path: inset(20% 0 50% 0); transform: translateX(-3px); color: var(--down); }
+      96%{ clip-path: inset(60% 0 10% 0); transform: translateX(3px); color: var(--accent); }
+      97%{ clip-path: inset(40% 0 30% 0); transform: translateX(-2px); }
+      98%{ clip-path: none; transform: none; color: inherit; }
+    }
+    @keyframes glitch-2{
+      0%,96%,100%{ opacity: 0; }
+      95%{ opacity: 1; transform: translateX(4px); color: var(--accent); }
+      97%{ opacity: 1; transform: translateX(-4px); color: var(--down); }
+      98%{ opacity: 0; }
+    }
+    .glitch{ position: relative; display: inline-block; }
+    .glitch::before, .glitch::after{
+      content: attr(data-text);
+      position: absolute; left: 0; top: 0;
+      font: inherit; color: inherit;
+      pointer-events: none;
+    }
+    .glitch::before{ animation: glitch-1 20s steps(1) infinite; }
+    .glitch::after{ animation: glitch-2 20s steps(1) infinite; opacity: 0; }
+
+    /* ---------- TYPING CURSOR ---------- */
+    .scramble-wrap::after{
+      display: inline;
+      content: "▋";
+      font-family: var(--mono);
+      color: var(--accent);
+      animation: blink 1s step-end infinite;
+      margin-left: 2px;
+      font-size: 0.85em;
+    }
+    @keyframes blink{
+      0%,100%{ opacity: 1; }
+      50%{ opacity: 0; }
+    }
+
+    /* ---------- MAGNETIC CONTACT ---------- */
+    .contact-link{ will-change: transform; }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    @media (max-width: 600px){
+      section{ padding: 72px 0; }
+
+      .scramble-wrap{ font-size: clamp(16px, 5vw, 24px); margin-bottom: 24px; }
+
+      .section-head{
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 40px;
+      }
+      .section-num{ display: none; }
+      .section-sub{ grid-column: 1 / -1; }
+
+      .skills-grid{ grid-template-columns: 1fr; }
+      .skill-group{ grid-column: 1 / -1; }
+
+      .projects{ grid-template-columns: 1fr; }
+      .projects-col{ grid-column: 1 / -1; }
+
+      .now-grid{ grid-template-columns: 1fr; }
+      .now-content{ grid-column: 1 / -1; }
+
+      .contact-grid{ grid-template-columns: 1fr; }
+      .contact-main{ grid-column: 1 / -1; }
+      .contact-cta{ font-size: clamp(32px, 10vw, 56px); margin-bottom: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" aria-label="Navegación">
+    <a href="#top" class="logo">
+      <span class="dot" aria-hidden="true"></span>
+      <span>MDG</span>
+    </a>
+    <span class="nav-sep" aria-hidden="true"></span>
+    <div class="nav-links">
+      <a href="#skills">{t["nav.skills"]}</a>
+      <a href="#projects">{t["nav.projects"]}</a>
+      <a href="#now">{t["nav.now"]}</a>
+      <a href="#contact">{t["nav.contact"]}</a>
+    </div>
+    <div class="nav-right">
+      <a class="cv-btn" href={isEn ? "/CV_EN_GonzalezMarcosDamian.pdf" : "/CV_ES_GonzalezMarcosDamian.pdf"} download title={isEn ? "Download CV" : "Descargar CV"}>CV<span aria-hidden="true"> ↓&#xFE0E;</span></a>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <a href="/" class={isEn ? "" : "active"} aria-current={isEn ? undefined : "page"} hreflang="es">ES</a>
+        <a href="/en/" class={isEn ? "active" : ""} aria-current={isEn ? "page" : undefined} hreflang="en">EN</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <main id="top">
+    <section class="hero wrap">
+      <div class="hero-meta">
+        <span>{t["hero.location"]}</span>
+        <span class="sep"></span>
+        <span>{t["hero.years"]}</span>
+        <span class="sep"></span>
+        <span class="status-pill">
+          <span class="dot"></span>
+          <span>{t["hero.status"]}</span>
+        </span>
+      </div>
+
+      <h1>
+        <span class="name">Marcos D.<br/><span class="glitch" data-text="González.">González.</span></span>
+        <span class="role">{t["hero.is"]}</span>
+      </h1>
+
+      <div class="scramble-wrap">
+        <span class="scramble"
+          data-words-es="productos de inversión y ahorro|discovery y estrategia de producto|datos, métricas e impacto|roadmaps que se convierten en features|productos financieros de alto impacto"
+          data-words-en="investment and savings products|product discovery and strategy|data, metrics and impact|roadmaps that ship as features|high-impact financial products">productos de inversión y ahorro</span>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-left">
+          <p class="hero-tagline" set:html={t["hero.tagline"]}></p>
+          <a href="#contact" class="hero-cta-btn">{t["hero.cta"]}<span aria-hidden="true"> ↗&#xFE0E;</span></a>
+        </div>
+
+        <div class="panel" id="hero-panel">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <div class="panel-head">
+            <span>{t["hero.panel.title"]}</span>
+            <span>{t["hero.panel.tag"]}</span>
+          </div>
+          <div class="quote">
+            <span class="symbol">INV.RÁPIDA</span>
+            <span class="price">10×</span>
+            <span class="change">{t["hero.panel.delta"]}</span>
+          </div>
+          <svg class="spark" viewBox="0 0 300 56" preserveAspectRatio="none" id="hero-spark">
+            <defs>
+              <linearGradient id="sparkFill" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#76CE6B" stop-opacity="0.28"/>
+                <stop offset="100%" stop-color="#76CE6B" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path id="spark-area" fill="url(#sparkFill)" d=""></path>
+            <path id="spark-line" fill="none" stroke="#76CE6B" stroke-width="1.5" d=""></path>
+          </svg>
+          <div class="spark-x">
+            <span>2019</span><span>2021</span><span>2023</span><span>2026</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">/ 01</span>
+        <h2 class="section-title">
+          <span>{t["skills.title"]}</span>
+          <em>{t["skills.title.em"]}</em>
+        </h2>
+        <p class="section-sub">{t["skills.sub"]}</p>
+      </div>
+
+      <div class="skills-grid reveal">
+        <div class="skill-group">
+          <div class="skill-cat"><span class="idx">/01</span> <span>{t["skills.cat.product"]}</span></div>
+          <div class="skill-list">
+            <span class="skill" data-w="core">{t["skills.product.user"]}</span>
+            <span class="skill" data-w="lead">{t["skills.product.disc"]}</span>
+            <span class="skill" data-w="6y">{t["skills.product.road"]}</span>
+            <span class="skill" data-w="reg">{t["skills.product.wealth"]}</span>
+            <span class="skill" data-w="kpi">{t["skills.product.kpi"]}</span>
+            <span class="skill" data-w="ux">{t["skills.product.ux"]}</span>
+            <span class="skill" data-w="prio">{t["skills.product.prio"]}</span>
+            <span class="skill" data-w="b2c">{t["skills.product.b2c"]}</span>
+          </div>
+          <div class="skill-meta"><b>08</b> · <span>{t["skills.cap"]}</span></div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-cat"><span class="idx">/02</span> <span>{t["skills.cat.data"]}</span></div>
+          <div class="skill-list">
+            <span class="skill" data-w="think">{t["skills.data.think"]}</span>
+            <span class="skill" data-w="deci">{t["skills.data.deci"]}</span>
+            <span class="skill" data-w="cohort">{t["skills.data.cohort"]}</span>
+            <span class="skill" data-w="port">{t["skills.data.port"]}</span>
+            <span class="skill" data-w="dash">{t["skills.data.dash"]}</span>
+            <span class="skill" data-w="funnel">{t["skills.data.funnel"]}</span>
+          </div>
+          <div class="skill-meta"><b>06</b> · <span>{t["skills.cap"]}</span></div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-cat"><span class="idx">/03</span> <span>{t["skills.cat.tech"]}</span></div>
+          <div class="skill-list">
+            <span class="skill" data-w="build">{t["skills.tech.build"]}</span>
+            <span class="skill" data-w="auto">{t["skills.tech.auto"]}</span>
+            <span class="skill" data-w="int">{t["skills.tech.int"]}</span>
+            <span class="skill" data-w="bridge">{t["skills.tech.bridge"]}</span>
+            <span class="skill" data-w="data">{t["skills.tech.data"]}</span>
+            <span class="skill" data-w="proto">{t["skills.tech.proto"]}</span>
+          </div>
+          <div class="skill-meta"><b>06</b> · <span>{t["skills.cap"]}</span></div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-cat"><span class="idx">/04</span> <span>{t["skills.cat.soft"]}</span></div>
+          <div class="skill-list">
+            <span class="skill" data-w="own">{t["skills.soft.own"]}</span>
+            <span class="skill" data-w="cross">{t["skills.soft.cross"]}</span>
+            <span class="skill" data-w="exec">{t["skills.soft.exec"]}</span>
+            <span class="skill" data-w="reg">{t["skills.soft.reg"]}</span>
+            <span class="skill" data-w="unblock">{t["skills.soft.unblock"]}</span>
+            <span class="skill" data-w="es/en">{t["skills.soft.lang"]}</span>
+          </div>
+          <div class="skill-meta"><b>06</b> · <span>{t["skills.cap"]}</span></div>
+        </div>
+
+        <div class="skill-group" style="border-top: 1px dashed var(--line-2);">
+          <div class="skill-cat"><span class="idx">/→&#xFE0E;</span> <span>{t["skills.cat.tools"]}</span></div>
+          <div class="skill-list">
+            <span class="skill" data-w="py">Python</span>
+            <span class="skill" data-w="sql">SQL</span>
+            <span class="skill" data-w="ai">Claude AI</span>
+            <span class="skill" data-w="redshift">Redshift</span>
+            <span class="skill" data-w="bq">BigQuery</span>
+            <span class="skill" data-w="pbi">Power BI</span>
+            <span class="skill" data-w="viz">Looker · Tableau</span>
+            <span class="skill" data-w="excel">Excel</span>
+            <span class="skill" data-w="aws">AWS</span>
+            <span class="skill" data-w="figma">Figma</span>
+            <span class="skill" data-w="jira">Jira · Confluence</span>
+            <span class="skill" data-w="react">React</span>
+            <span class="skill" data-w="fapi">FastAPI</span>
+            <span class="skill" data-w="dyna">Dynatrace</span>
+          </div>
+          <div class="skill-meta"><b>14</b> · <span>{t["skills.tools"]}</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">/ 02</span>
+        <h2 class="section-title">
+          <span>{t["projects.title"]}</span>
+          <em>{t["projects.title.em"]}</em>
+        </h2>
+        <p class="section-sub">{t["projects.sub"]}</p>
+      </div>
+
+      <div class="projects reveal">
+        <div></div>
+        <div class="projects-col">
+
+          <div class="proj-tabs" role="tablist" aria-label="Filtrar proyectos">
+            <button class="proj-tab featured" role="tab" aria-selected="false" data-tab="personal">
+              <span class="tab-dot" aria-hidden="true"></span><span>{t["projects.tab.personal"]}</span><span class="count">3</span>
+            </button>
+            <button class="proj-tab active" role="tab" aria-selected="true" data-tab="corp">
+              <span>{t["projects.tab.corp"]}</span><span class="count">6</span>
+            </button>
+          </div>
+
+          <!-- PERSONAL PROJECTS — propios, por fecha desc -->
+          <div class="projects-list" data-panel="personal" hidden>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>IAMC · MERCADO</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name">
+                  <a href="https://mercado.marcosdamiangonzalez.ar/" target="_blank" rel="noopener" style="color:inherit;">
+                    <span>{t["proj.mkt.name"]}</span> <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗&#xFE0E;</span>
+                  </a>
+                </h3>
+                <div class="project-org"><span>{t["proj.mkt.org"]}</span> · 2026</div>
+              </div>
+              <div class="project-desc" set:html={t["proj.mkt.desc"]}></div>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label">{t["proj.mkt.s1.l"]}</span>
+                  <span class="value neutral">{t["proj.mkt.s1.v"]}</span>
+                </div>
+                <div class="stat">
+                  <span class="label">{t["proj.mkt.s2.l"]}</span>
+                  <span class="value neutral">{t["proj.mkt.s2.v"]}</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>BCRA · OPEN DATA</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name">
+                  <a href="https://dolar.marcosdamiangonzalez.ar/" target="_blank" rel="noopener" style="color:inherit;">
+                    <span>{t["proj.bcra.name"]}</span> <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗&#xFE0E;</span>
+                  </a>
+                </h3>
+                <div class="project-org"><span>{t["proj.bcra.org"]}</span> · 2026</div>
+              </div>
+              <div class="project-desc" set:html={t["proj.bcra.desc"]}></div>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label">{t["proj.bcra.s1.l"]}</span>
+                  <span class="value">{t["proj.bcra.s1.v"]}</span>
+                </div>
+                <div class="stat">
+                  <span class="label">{t["proj.bcra.s2.l"]}</span>
+                  <span class="value neutral">{t["proj.bcra.s2.v"]}</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>BLD · BUILDFUTURE</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name">
+                  <a href="https://buildfuture.com.ar" target="_blank" rel="noopener" style="color:inherit;">
+                    BuildFuture <span style="color:var(--accent); font-size:0.6em; vertical-align:0.4em;">↗&#xFE0E;</span>
+                  </a>
+                </h3>
+                <div class="project-org">buildfuture.com.ar · 2024–<span>{t["proj.now"]}</span></div>
+              </div>
+              <div class="project-desc" set:html={t["proj.bf.desc"]}></div>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label">{t["proj.bf.s1"]}</span>
+                  <span class="value">4</span>
+                </div>
+                <div class="stat">
+                  <span class="label">{t["proj.bf.s2"]}</span>
+                  <span class="value neutral">E2E</span>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- CORPORATE PROJECTS — laburos para empresas, por fecha desc -->
+          <div class="projects-list" data-panel="corp">
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>USD · OFICIAL</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name">{t["proj.dolar.name"]}</h3>
+                <div class="project-org">Ualá · 2025–<span>{t["proj.now"]}</span></div>
+              </div>
+              <div class="project-desc" set:html={t["proj.dolar.desc"]}></div>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label">{t["proj.stat.rank"]}</span>
+                  <span class="value">#1</span>
+                </div>
+                <div class="stat">
+                  <span class="label">{t["proj.stat.vertical"]}</span>
+                  <span class="value neutral">Wealth</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>ABC · ACC.BONOS.CEDEARS</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name">{t["proj.abc.name"]}</h3>
+                <div class="project-org">Ualá · 2025–<span>{t["proj.now"]}</span></div>
+              </div>
+              <div class="project-desc" set:html={t["proj.abc.desc"]}></div>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label">{t["proj.abc.s1"]}</span>
+                  <span class="value neutral">{t["proj.abc.s1.v"]}</span>
+                </div>
+                <div class="stat">
+                  <span class="label">{t["proj.abc.s2"]}</span>
+                  <span class="value">{t["proj.abc.s2.v"]}</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>OPS · ANALYTICS</span>
+                  <span class="badge live">LIVE</span>
+                </div>
+                <h3 class="project-name">{t["proj.py.name"]}</h3>
+                <div class="project-org">Ualá · 2025</div>
+              </div>
+              <div class="project-desc" set:html={t["proj.py.desc"]}></div>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label">{t["proj.stat.time"]}</span>
+                  <span class="value">−95%</span>
+                </div>
+                <div class="stat">
+                  <span class="label">{t["proj.stat.scope"]}</span>
+                  <span class="value neutral">5 prods</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>CTA · REMUNERADA</span>
+                  <span class="badge">SHIPPED</span>
+                </div>
+                <h3 class="project-name">{t["proj.cta.name"]}</h3>
+                <div class="project-org">Banco Supervielle · 2025</div>
+              </div>
+              <div class="project-desc" set:html={t["proj.cta.desc"]}></div>
+            </article>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>FCI · FONDOS COMUNES</span>
+                  <span class="badge">SHIPPED</span>
+                </div>
+                <h3 class="project-name">{t["proj.fci.name"]}</h3>
+                <div class="project-org">Banco Supervielle · 2023–2025</div>
+              </div>
+              <div class="project-desc" set:html={t["proj.fci.desc"]}></div>
+            </article>
+
+            <article class="project">
+              <div class="project-head">
+                <div class="project-symbol">
+                  <span>FCI · INV.RAPIDA</span>
+                  <span class="badge">SHIPPED</span>
+                </div>
+                <h3 class="project-name">{t["proj.invrap.name"]}</h3>
+                <div class="project-org">Banco Supervielle · 2022–2025</div>
+              </div>
+              <div class="project-desc" set:html={t["proj.invrap.desc"]}></div>
+              <div class="project-stats">
+                <div class="stat">
+                  <span class="label">{t["proj.stat.users"]}</span>
+                  <span class="value">10×</span>
+                </div>
+                <div class="stat">
+                  <span class="label">{t["proj.stat.volume"]}</span>
+                  <span class="value">10×</span>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- NOW -->
+    <section id="now" class="now">
+      <div class="wrap now-grid reveal">
+        <span class="section-num">/ 03</span>
+        <div class="now-content">
+          <div>
+            <div class="now-label">
+              <span class="dot"></span>
+              <span>{t["now.label"]}</span>
+            </div>
+            <p class="now-text" set:html={t["now.text"]}></p>
+          </div>
+          <div class="now-meta">
+            <div class="row"><span class="k">{t["now.role"]}</span><span class="v">{t["now.role.v"]}</span></div>
+            <div class="row"><span class="k">{t["now.org"]}</span><span class="v">Ualá</span></div>
+            <div class="row"><span class="k">{t["now.loc"]}</span><span class="v">Córdoba, AR</span></div>
+            <div class="row"><span class="k">{t["now.book"]}</span><span class="v">{t["now.book.v"]}</span></div>
+            <div class="row"><span class="k">{t["now.code"]}</span><span class="v">Python + Claude</span></div>
+            <div class="row"><span class="k">{t["now.upd"]}</span><span class="v" id="now-updated">—</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact wrap">
+      <div class="contact-grid">
+        <span class="section-num reveal">/ 04</span>
+        <div class="contact-main">
+          <h2 class="contact-cta reveal" set:html={t["contact.cta"]}></h2>
+
+          <div class="contact-links reveal">
+            <a class="contact-link" href="https://www.linkedin.com/in/marcosdamiangonzalez" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn · /marcosdamiangonzalez">
+              <svg class="ico fill" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.21 24 24 23.23 24 22.28V1.72C24 .77 23.21 0 22.22 0z"/></svg>
+            </a>
+            <a class="contact-link" href="mailto:ingonzalezdamian@gmail.com" aria-label="Email" title="ingonzalezdamian@gmail.com">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            </a>
+            <a class="contact-link" href="https://wa.me/5492920445362" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp">
+              <svg class="ico fill" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.18.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.89-.79-1.5-1.78-1.67-2.08-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.12 4.51.71.31 1.27.49 1.71.63.72.23 1.37.2 1.89.12.58-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.04 21.5h-.01a9.95 9.95 0 01-5.07-1.39l-.36-.21-3.77.99 1.01-3.67-.24-.38a9.9 9.9 0 01-1.52-5.27c0-5.47 4.46-9.91 9.96-9.91 2.66 0 5.16 1.04 7.04 2.92a9.86 9.86 0 012.92 7c0 5.46-4.46 9.91-9.96 9.91zm8.41-18.31a11.83 11.83 0 00-8.41-3.48C5.46-.29.06 5.1.06 11.65c0 2.09.55 4.13 1.59 5.93L0 24l6.6-1.73a11.96 11.96 0 005.43 1.38h.01c6.58 0 11.96-5.39 11.96-11.94 0-3.19-1.24-6.19-3.5-8.45z"/></svg>
+            </a>
+            <a class="contact-link" href="https://instagram.com/dagonzalz" target="_blank" rel="noopener" aria-label="Instagram" title="@dagonzalz">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>© 2026 · Marcos D. González · <span>{t["footer.built"]}</span></div>
+    <div class="clock" id="clock">— · — · —</div>
+  </footer>
+
+  <script>
+  // ---------- I18N ----------
+
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Idioma servido por la ruta (/ = es, /en/ = en). El contenido ya viene
+  // renderizado server-side; el cliente no hace swap de texto.
+  const currentLang = document.documentElement.lang === "en" ? "en" : "es";
+
+  // ---------- HERO SPARK ----------
+  function buildSpark() {
+    const W = 300, H = 56, N = 60;
+    const pts = [];
+    for (let i = 0; i < N; i++) {
+      const t = i / (N - 1);
+      let v = Math.pow(t, 1.6) * 0.85 + 0.08;
+      v += (Math.sin(i * 0.7) * 0.025) + (Math.cos(i * 1.3) * 0.018);
+      pts.push(v);
+    }
+    const max = Math.max(...pts), min = Math.min(...pts);
+    const xy = pts.map((v, i) => {
+      const x = (i / (N - 1)) * W;
+      const y = H - ((v - min) / (max - min)) * (H - 6) - 3;
+      return [x, y];
+    });
+    const linePath = xy.map((p, i) => (i === 0 ? "M" : "L") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+    const areaPath = linePath + ` L ${W} ${H} L 0 ${H} Z`;
+    document.getElementById("spark-line").setAttribute("d", linePath);
+    document.getElementById("spark-area").setAttribute("d", areaPath);
+  }
+  buildSpark();
+
+  // ---------- SCRAMBLE EFFECT ----------
+  const SCRAMBLE_CHARS = "▓░▒█01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&";
+  function scrambleTo(el, target, duration = 900) {
+    cancelAnimationFrame(el._raf);
+    const start = performance.now();
+    function frame(now) {
+      const t = Math.min(1, (now - start) / duration);
+      let out = "";
+      for (let i = 0; i < target.length; i++) {
+        const reveal = i / target.length;
+        if (t > reveal + 0.15) {
+          out += target[i];
+        } else {
+          out += SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+        }
+      }
+      el.textContent = out;
+      if (t < 1) el._raf = requestAnimationFrame(frame);
+      else el.textContent = target;
+    }
+    el._raf = requestAnimationFrame(frame);
+  }
+
+  /** @type {number | null} */
+  let scrambleInterval = null;
+  function setupScramble() {
+    if (scrambleInterval) clearInterval(scrambleInterval);
+    const el = document.querySelector(".scramble");
+    if (!el) return;
+    const words = el.getAttribute("data-words-" + currentLang).split("|");
+    if (REDUCED_MOTION) { el.textContent = words[0]; return; }
+    let idx = 0;
+    scrambleTo(el, words[0], 700);
+    scrambleInterval = setInterval(() => {
+      idx = (idx + 1) % words.length;
+      scrambleTo(el, words[idx], 900);
+    }, 4200);
+  }
+
+  // ---------- REVEAL ON SCROLL ----------
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("in");
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  function onScroll() {
+    const panel = document.getElementById("hero-panel");
+    if (panel) panel.style.transform = `translateY(${(window.scrollY * 0.08).toFixed(1)}px)`;
+  }
+  let ticking = false;
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      requestAnimationFrame(() => { onScroll(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // ---------- LIVE CLOCK ----------
+  function tick() {
+    const d = new Date();
+    const timeOpts = { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, timeZone: "America/Argentina/Buenos_Aires" };
+    const dateOpts = { day: "2-digit", month: "short", year: "numeric" };
+    const locale = currentLang === "en" ? "en-GB" : "es-AR";
+    const time = d.toLocaleTimeString(locale, timeOpts);
+    const date = d.toLocaleDateString(locale, dateOpts);
+    const cl = document.getElementById("clock");
+    if (cl) cl.textContent = `${date} · ${time} · BUE`;
+  }
+  /** @type {number | null} */
+  let clockTimer = setInterval(tick, 1000);
+  tick();
+
+  function updateUpdated() {
+    const d = new Date();
+    const locale = currentLang === "en" ? "en-GB" : "es-AR";
+    const fmt = d.toLocaleDateString(locale, { day: "2-digit", month: "short", year: "numeric" });
+    const el = document.getElementById("now-updated");
+    if (el) el.textContent = fmt.toLowerCase();
+  }
+
+  // ---------- INIT ----------
+  setupScramble();
+  updateUpdated();
+
+  // Skill meta flicker on hover
+  document.querySelectorAll(".skill-meta b").forEach(b => {
+    const orig = b.textContent;
+    b.parentElement.addEventListener("mouseenter", () => {
+      let count = 0;
+      const it = setInterval(() => {
+        b.textContent = String(Math.floor(Math.random() * 99)).padStart(2, "0");
+        if (++count > 6) { clearInterval(it); b.textContent = orig; }
+      }, 50);
+    });
+  });
+
+  // Easter egg: type "claude"
+  let buf = "";
+  window.addEventListener("keydown", (e) => {
+    buf = (buf + e.key.toLowerCase()).slice(-6);
+    if (buf === "claude") {
+      document.documentElement.style.setProperty("--accent", "#FF6B35");
+      document.documentElement.style.setProperty("--accent-dim", "#a14820");
+      setTimeout(() => {
+        document.documentElement.style.setProperty("--accent", "#76CE6B");
+        document.documentElement.style.setProperty("--accent-dim", "#3a7a33");
+      }, 2200);
+    }
+  });
+
+  // ---------- ANIMATED COUNTERS ----------
+  /** @param {Element} node */
+  function animateCounter(node){
+    const el = /** @type {HTMLElement} */ (node);
+    const raw = (el.textContent || "").trim();
+    const prefix = raw.match(/^[#−-]/) ? raw[0] : "";
+    const suffix = raw.match(/[×%×]$/) ? raw.slice(-1) : (raw.match(/[a-zA-Z]+$/) ? "" : "");
+    const num = parseFloat(raw.replace(/[^0-9.]/g, ""));
+    if (isNaN(num) || num === 0) return;
+
+    const duration = 1200;
+    const start = performance.now();
+    const isInt = Number.isInteger(num);
+
+    el.dataset.animated = "1";
+    requestAnimationFrame(function frame(now){
+      const t = Math.min(1, (now - start) / duration);
+      const ease = 1 - Math.pow(1 - t, 3);
+      const val = isInt ? Math.round(ease * num) : (ease * num).toFixed(1);
+      el.textContent = prefix + val + suffix;
+      if (t < 1) requestAnimationFrame(frame);
+      else el.textContent = raw;
+    });
+  }
+
+  const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.querySelectorAll(".stat .value").forEach(node => {
+        const el = /** @type {HTMLElement} */ (node);
+        if (!el.dataset.animated) animateCounter(el);
+      });
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll(".project").forEach(p => counterObs.observe(p));
+
+  // ---------- PROJECT TABS ----------
+  (function projectTabs(){
+    const tabs   = document.querySelectorAll(".proj-tab");
+    const panels = document.querySelectorAll(".projects-list");
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const target = tab.dataset.tab;
+        tabs.forEach(t => {
+          const on = t === tab;
+          t.classList.toggle("active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        panels.forEach(p => { p.hidden = p.dataset.panel !== target; });
+      });
+    });
+  })();
+
+  // ---------- SPARKLINE DRAW ANIMATION ----------
+  (function animateSpark(){
+    const line = /** @type {SVGPathElement | null} */ (document.getElementById("spark-line"));
+    if (!line) return;
+    const len = line.getTotalLength();
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+    line.style.transition = "stroke-dashoffset 1.8s cubic-bezier(.4,0,.2,1) 0.3s";
+    requestAnimationFrame(() => { line.style.strokeDashoffset = "0"; });
+  })();
+
+  // ---------- MAGNETIC CONTACT LINKS ----------
+  document.querySelectorAll(".contact-link").forEach(node => {
+    const el = /** @type {HTMLElement} */ (node);
+    el.addEventListener("mousemove", ev => {
+      const e = /** @type {MouseEvent} */ (ev);
+      const r = el.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width  / 2) * 0.18;
+      const dy = (e.clientY - r.top  - r.height / 2) * 0.18;
+      el.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+    el.addEventListener("mouseleave", () => {
+      el.style.transition = "transform 0.4s cubic-bezier(.2,.7,.2,1), background 0.2s";
+      el.style.transform = "";
+      setTimeout(() => { el.style.transition = ""; }, 400);
+    });
+  });
+
+  // ---------- PAUSAR TIMERS CON LA PESTAÑA OCULTA (batería) ----------
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (scrambleInterval) { clearInterval(scrambleInterval); scrambleInterval = null; }
+      if (clockTimer) { clearInterval(clockTimer); clockTimer = null; }
+    } else {
+      if (!clockTimer) { tick(); clockTimer = setInterval(tick, 1000); }
+      if (!REDUCED_MOTION && !scrambleInterval) setupScramble();
+    }
+  });
+
+  </script>
+</body>
+</html>
